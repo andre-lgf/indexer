@@ -30,6 +30,16 @@ module Profiles
         last_year_contrib:,
         profile_image_url:,
       }
+
+      context.organizations = context.page.css("div.js-profile-editable-replace div.border-top a").select do |a|
+                                a[:"data-hovercard-type"] == "organization" && a[:"aria-label"]
+                              end.map do |a|
+        {
+          name: a[:"aria-label"],
+          organization_url: "https://github.com#{a[:href]}",
+          image_url: a.at_css("img")[:src],
+        }
+      end
     end
 
     private def handle_value(value)
