@@ -31,9 +31,9 @@ RSpec.describe(Profile, type: :model) do
     context "when updating github url" do
       let(:profile) { create(:profile) }
       it "fetches profile" do
-        allow(Profiles::Fetch).to(receive(:call))
+        allow(FetchProfileJob).to(receive(:perform_async)).with(profile.id)
         profile.update(github_url: Faker::Internet.url(host: "github.com"))
-        expect(Profiles::Fetch).to(have_received(:call))
+        expect(FetchProfileJob).to(have_received(:perform_async).with(profile.id))
       end
     end
   end

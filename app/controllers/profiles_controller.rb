@@ -27,6 +27,7 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.save
+        FetchProfileJob.perform_async(@profile.id)
         format.html { redirect_to(profile_url(@profile), notice: "Profile was successfully created.") }
         format.json { render(:show, status: :created, location: @profile) }
       else

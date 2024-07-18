@@ -6,5 +6,5 @@ class Profile < ApplicationRecord
   after_update :fetch_profile, if: :saved_change_to_github_url?
   enum indexing_status: { in_progress: 0, completed: 1 }
 
-  private def fetch_profile = Profiles::Fetch.call(profile: self)
+  private def fetch_profile = FetchProfileJob.perform_async(id)
 end

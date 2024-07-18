@@ -48,7 +48,9 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'interactor-rails'
+gem 'kamal', require: false
 gem 'pagy'
+gem 'sidekiq'
 gem 'watir'
 
 group :development, :test do
