@@ -94,3 +94,14 @@ RSpec.configure do |config|
     end
   end
 end
+
+VCR.configure do |config|
+  config.cassette_library_dir = "#{Rails.root}/spec/cassettes"
+  config.hook_into(:webmock)
+  # config.ignore_localhost = false
+  config.configure_rspec_metadata!
+  config.ignore_request do |request|
+    uri = URI(request.uri)
+    uri.path == "/shutdown"
+  end
+end

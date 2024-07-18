@@ -47,7 +47,9 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+gem 'interactor-rails'
 gem 'pagy'
+gem 'watir'
 
 group :development, :test do
   gem 'bullet'
@@ -85,4 +87,5 @@ group :test do
   gem 'simplecov-cobertura', require: false
   gem 'test-prof'
   gem 'vcr'
+  gem 'webmock'
 end

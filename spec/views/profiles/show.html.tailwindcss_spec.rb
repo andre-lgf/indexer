@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe("profiles/show", type: :view) do
-  before(:each) { assign(:profile, build_stubbed(:profile)) }
+  before(:each) { assign(:profile, build_stubbed(:profile, :filled)) }
 
   it "renders attributes in <p>" do
     render

@@ -15,8 +15,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_133618) do
   enable_extension "plpgsql"
 
   create_table "profiles", force: :cascade do |t|
-    t.string "name"
-    t.string "github_url"
+    t.string "name", null: false
+    t.string "github_url", null: false
     t.string "username"
     t.integer "num_followers"
     t.integer "num_following"
@@ -24,7 +24,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_133618) do
     t.integer "last_year_contrib"
     t.string "profile_image_url"
     t.string "location"
-    t.integer "indexing_status"
+    t.integer "indexing_status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["github_url"], name: "index_profiles_on_github_url", unique: true
