@@ -14,6 +14,7 @@ FactoryBot.define do
       profile_image_url { Faker::Internet.url }
       location { Faker::Address.full_address }
       indexing_status { :completed }
+      shortened_url { Faker::Internet.url(host: "tinyurl.com") }
     end
   end
 end

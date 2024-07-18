@@ -15,6 +15,7 @@ require "rails_helper"
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe("/profiles", type: :request) do
+  include_context "with_url_shortener"
   # This should return the minimal set of attributes required to create a valid
   # Profile. As you add validations to Profile, be sure to
   # adjust the attributes here as well.
@@ -22,10 +23,9 @@ RSpec.describe("/profiles", type: :request) do
 
   let(:invalid_attributes) { attributes_for(:profile, name: nil) }
 
-  let_it_be(:profile) { create(:profile, :filled) }
-
   describe "GET /index" do
     it "renders a successful response" do
+      Profile.create!(valid_attributes)
       get profiles_url
       expect(response).to(be_successful)
     end
@@ -33,6 +33,7 @@ RSpec.describe("/profiles", type: :request) do
 
   describe "GET /show" do
     it "renders a successful response" do
+      profile = Profile.create!(valid_attributes)
       get profile_url(profile)
       expect(response).to(be_successful)
     end
@@ -47,6 +48,7 @@ RSpec.describe("/profiles", type: :request) do
 
   describe "GET /edit" do
     it "renders a successful response" do
+      profile = Profile.create!(valid_attributes)
       get edit_profile_url(profile)
       expect(response).to(be_successful)
     end
@@ -88,12 +90,14 @@ RSpec.describe("/profiles", type: :request) do
       end
 
       it "updates the requested profile" do
+        profile = Profile.create!(valid_attributes)
         patch profile_url(profile), params: { profile: new_attributes }
         profile.reload
         expect(profile.name).to(eq(new_name))
       end
 
       it "redirects to the profile" do
+        profile = Profile.create!(valid_attributes)
         patch profile_url(profile), params: { profile: new_attributes }
         profile.reload
         expect(response).to(redirect_to(profile_url(profile)))
@@ -102,6 +106,7 @@ RSpec.describe("/profiles", type: :request) do
 
     context "with invalid parameters" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
+        profile = Profile.create!(valid_attributes)
         patch profile_url(profile), params: { profile: invalid_attributes }
         expect(response).to(have_http_status(:unprocessable_entity))
       end
@@ -110,12 +115,14 @@ RSpec.describe("/profiles", type: :request) do
 
   describe "DELETE /destroy" do
     it "destroys the requested profile" do
+      profile = Profile.create!(valid_attributes)
       expect do
         delete(profile_url(profile))
       end.to(change(Profile, :count).by(-1))
     end
 
     it "redirects to the profiles list" do
+      profile = Profile.create!(valid_attributes)
       delete profile_url(profile)
       expect(response).to(redirect_to(profiles_url))
     end
@@ -123,6 +130,7 @@ RSpec.describe("/profiles", type: :request) do
 
   describe "PUT /reindex" do
     it "reindexes the requested profile" do
+      profile = Profile.create!(valid_attributes)
       allow(FetchProfileJob).to(receive(:perform_async).with(profile.id))
       put reindex_profile_url(profile)
       expect(FetchProfileJob).to(have_received(:perform_async).with(profile.id))

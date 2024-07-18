@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe(Profiles::UpdateProfile, type: :interactor) do
+  include_context "with_url_shortener"
+
   subject(:context) { described_class.call(profile:, personal_data:, organizations:) }
   let(:profile) { create(:profile) }
   let(:personal_data) do

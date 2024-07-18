@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_18_190052) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_18_213717) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,8 +44,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_18_190052) do
     t.integer "indexing_status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "shortened_url"
     t.index ["github_url"], name: "index_profiles_on_github_url", unique: true
     t.index ["name"], name: "index_profiles_on_name"
+    t.index ["shortened_url"], name: "index_profiles_on_shortened_url", where: "(shortened_url IS NOT NULL)"
   end
 
 end

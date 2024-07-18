@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://tinyurl.com/api-create.php?url=https://github.com
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      User-Agent:
+      - rest-client/2.1.0 (darwin23 arm64) ruby/3.3.2p78
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - tinyurl.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 18 Jul 2024 20:30:23 GMT
+      Content-Type:
+      - text/plain; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - max-age=86400, public
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Last-Modified:
+      - Thu, 18 Jul 2024 19:51:38 GMT
+      Cf-Cache-Status:
+      - HIT
+      Age:
+      - '2325'
+      Set-Cookie:
+      - __cf_bm=LJ1YbwoDGMfW2RACRWTVYepfIeWr9Av6KqEBrdXQwNk-1721334623-1.0.1.1-kIpLFZP.WpI.ocMaLPycisTbO3e47MeDtxNQWPAF_P.VPaig7jx7SMDp.x_kx0Ht1vWgnh7E1H5LLb5UiQbeTA;
+        path=/; expires=Thu, 18-Jul-24 21:00:23 GMT; domain=.tinyurl.com; HttpOnly
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 8a553ab6b902031e-GRU
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: https://tinyurl.com/5ra9gp
+  recorded_at: Thu, 18 Jul 2024 20:30:23 GMT
+recorded_with: VCR 6.2.0

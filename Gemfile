@@ -50,6 +50,7 @@ gem "bootsnap", require: false
 gem 'interactor-rails'
 gem 'kamal', require: false
 gem 'pagy'
+gem 'rest-client'
 gem 'sidekiq'
 gem 'watir'
 

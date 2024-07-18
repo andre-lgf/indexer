@@ -4,6 +4,8 @@ require "rails_helper"
 require "sidekiq/testing"
 
 RSpec.describe(FetchProfileJob, type: :job) do
+  include_context "with_url_shortener"
+
   let(:profile) { create(:profile, github_url: "https://github.com/matz", name: "Matz") }
 
   it "runs" do
