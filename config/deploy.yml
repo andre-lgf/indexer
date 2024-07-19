@@ -2,7 +2,7 @@
 service: indexer
 
 # Name of the container image.
-image: andre-lgf/indexer
+image: andrelgf/indexer
 
 # Deploy to these servers.
 servers:
