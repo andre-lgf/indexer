@@ -53,6 +53,7 @@ gem 'pagy'
 gem 'rest-client'
 gem 'sidekiq'
 gem 'watir'
+gem "selenium-webdriver"
 
 group :development, :test do
   gem 'bullet'
@@ -85,7 +86,6 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-  gem "selenium-webdriver"
   gem 'simplecov', require: false
   gem 'simplecov-cobertura', require: false
   gem 'test-prof'

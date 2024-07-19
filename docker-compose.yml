@@ -1,0 +1,99 @@
+services:
+  redis:
+    image: "redis:7-alpine"
+    container_name: redis
+    command: redis-server
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redis:/data"
+
+  web:
+    platform: linux/amd64
+    container_name: web
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_started
+      db:
+        condition: service_started
+      elasticsearch:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - "./:/var/www"
+    ports:
+      - 3000:3000
+    env_file:
+      - ./.compose-env
+
+  sidekiq:
+    platform: linux/amd64
+    container_name: sidekiq
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_started
+      db:
+        condition: service_started
+      elasticsearch:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - "./:/var/www"
+    command: bundle exec sidekiq
+    env_file:
+      - ./.compose-env
+
+  db:
+    image: 'postgres:15.2-alpine'
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+
+  nginx:
+    container_name: nginx
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    depends_on:
+      - web
+    ports:
+      - 80:80
+      - 443:443
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.7.0-arm64
+    restart: unless-stopped
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      discovery.type: "single-node"
+      ES_JAVA_OPTS: "-Xms2g -Xmx2g"
+      xpack.security.enabled: false
+    volumes:
+      - ./esdata:/usr/share/elasticsearch/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -I http://localhost:9200 | grep -q 'HTTP/1.1 200 OK'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+
+volumes:
+  redis:
+  postgres:
+  esdata:
+    driver: local

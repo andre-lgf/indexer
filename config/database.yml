@@ -84,5 +84,5 @@ production:
   <<: *default
   host: <%= ENV["DB_HOST"] %>
   database: indexer_production
-  username: indexer
+  username: <%= ENV.fetch("POSTGRES_USER") { "indexer" } %>
   password: <%= ENV["POSTGRES_PASSWORD"] %>

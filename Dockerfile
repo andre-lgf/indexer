@@ -41,8 +41,12 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 FROM base
 
 # Install packages needed for deployment
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libvips postgresql-client && \
+RUN apt-get update -qq && apt-get install --no-install-recommends -y wget gpg gpg-agent && \
+    wget https://dl-ssl.google.com/linux/linux_signing_key.pub -O /tmp/google.pub && \
+    gpg --no-default-keyring --keyring /etc/apt/keyrings/google-chrome.gpg --import /tmp/google.pub && \
+    echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main' | tee /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl libvips postgresql-client google-chrome-stable && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
