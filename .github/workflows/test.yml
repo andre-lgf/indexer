@@ -47,4 +47,6 @@ jobs:
           DB_HOST: 127.0.0.1
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        run: bundle exec rspec spec
+        run: |
+          SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile
+          bundle exec rspec spec
