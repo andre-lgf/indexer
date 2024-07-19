@@ -33,6 +33,7 @@ jobs:
       - name: Create database
         env:
           RAILS_ENV: test
+          DB_HOST: 127.0.0.1
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         run: |
@@ -43,6 +44,7 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
+          DB_HOST: 127.0.0.1
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         run: bundle exec rspec spec
