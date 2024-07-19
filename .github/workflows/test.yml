@@ -31,6 +31,11 @@ jobs:
         run: sudo apt-get install postgresql-client libpq-dev
 
       - name: Create database
+        env:
+          RAILS_ENV: test
+          DB_HOST: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         run: |
           bundle exec rails db:create
           bundle exec rails db:schema:load
@@ -39,5 +44,7 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+          DB_HOST: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         run: bundle exec rspec spec
