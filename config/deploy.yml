@@ -23,8 +23,9 @@ servers:
 registry:
   # Specify the registry server, if you're not using Docker Hub
   # server: registry.digitalocean.com / ghcr.io / ...
-  server: ghcr.io
-  username: andre-lgf
+  # server: ghcr.io
+  # username: andre-lgf
+  username: andrelgf
 
   # Always use an access token rather than real password when possible.
   password:
@@ -35,6 +36,7 @@ registry:
 env:
   clear:
     DB_HOST: 159.203.129.114
+    REDIS_URL: "redis://159.203.129.114:6379/0"
   secret:
     - RAILS_MASTER_KEY
     - POSTGRES_PASSWORD
@@ -56,7 +58,7 @@ env:
 # Use accessory services (secrets come from .env).
 accessories:
   db:
-    image: postgresql:latest
+    image: postgres:latest
     host: 159.203.129.114
     port: 5432
     env:
@@ -80,27 +82,19 @@ accessories:
     # options:
     #   network: "private"
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.7.0-arm64
+    image: elasticsearch:8.14.3
     host: 159.203.171.222
-    restart: unless-stopped
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    environment:
-      discovery.type: "single-node"
-      ES_JAVA_OPTS: "-Xms2g -Xmx2g"
-      xpack.security.enabled: false
+    port: 9200
+    # ports:
+    #   - "9200:9200"
+    #   - "9300:9300"
+    env:
+      clear:
+        discovery.type: "single-node"
+        ES_JAVA_OPTS: "-Xms2g -Xmx2g"
+        xpack.security.enabled: false
     volumes:
       - ./esdata:/usr/share/elasticsearch/data
-    healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "curl -s -I http://localhost:9200 | grep -q 'HTTP/1.1 200 OK'",
-        ]
-      interval: 10s
-      timeout: 10s
-      retries: 120
 
 # Configure custom arguments for Traefik. Be sure to reboot traefik when you modify it.
 # traefik:
