@@ -8,13 +8,13 @@ image: andre-lgf/indexer
 servers:
   web:
     hosts:
-      - 164.152.63.96
+      - 68.183.146.73
     # options:
     #   network: "private"
   
   job:
     hosts:
-      - 164.152.63.96
+      - 68.183.146.73
     cmd: bundle exec sidekiq -q default
     # options:
     #   network: "private"
@@ -34,7 +34,7 @@ registry:
 # Remember to run `kamal env push` after making changes!
 env:
   clear:
-    DB_HOST: 159.112.186.38
+    DB_HOST: 159.203.129.114
   secret:
     - RAILS_MASTER_KEY
     - POSTGRES_PASSWORD
@@ -57,7 +57,7 @@ env:
 accessories:
   db:
     image: postgresql:latest
-    host: 159.112.186.38
+    host: 159.203.129.114
     port: 5432
     env:
       clear:
@@ -73,12 +73,34 @@ accessories:
     #   network: "private"
   redis:
     image: redis:7.0
-    host: 159.112.186.38
+    host: 159.203.129.114
     port: 6379
     directories:
       - data:/data
     # options:
     #   network: "private"
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.7.0-arm64
+    host: 159.203.171.222
+    restart: unless-stopped
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      discovery.type: "single-node"
+      ES_JAVA_OPTS: "-Xms2g -Xmx2g"
+      xpack.security.enabled: false
+    volumes:
+      - ./esdata:/usr/share/elasticsearch/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -I http://localhost:9200 | grep -q 'HTTP/1.1 200 OK'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
 
 # Configure custom arguments for Traefik. Be sure to reboot traefik when you modify it.
 # traefik:
