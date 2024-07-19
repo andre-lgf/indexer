@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe(Profile, type: :model) do
+  include_context "with_url_shortener"
+
   context "validations" do
     it "requires both name and github url" do
       expect(described_class.new.valid?).to(be_falsey)
@@ -34,6 +36,16 @@ RSpec.describe(Profile, type: :model) do
         allow(FetchProfileJob).to(receive(:perform_async)).with(profile.id)
         profile.update(github_url: Faker::Internet.url(host: "github.com"))
         expect(FetchProfileJob).to(have_received(:perform_async).with(profile.id))
+      end
+    end
+
+    context "error shortening url" do
+      let(:profile) { create(:profile) }
+      it "fails to update" do
+        allow(UrlShortener).to(receive(:call).and_return(double(success?: false, errors: double(["Error details"]))))
+        expect do
+          profile.update(github_url: Faker::Internet.url(host: "github.com"))
+        end.to(raise_error(ActiveModel::StrictValidationFailed))
       end
     end
   end

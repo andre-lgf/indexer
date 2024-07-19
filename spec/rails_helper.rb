@@ -8,6 +8,7 @@ require_relative "../config/environment"
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
+Dir[File.expand_path("shared/**/*.rb", __dir__)].each { |f| require f }
 require "test_prof/factory_prof/nate_heckler"
 require "simplecov"
 SimpleCov.start do
@@ -103,5 +104,8 @@ VCR.configure do |config|
   config.ignore_request do |request|
     uri = URI(request.uri)
     uri.path == "/shutdown"
+  end
+  config.register_request_matcher(:uri_ignoring_query_params) do |request1, request2|
+    request1.parsed_uri.host == "tinyurl.com" || request1.uri == request2.uri
   end
 end

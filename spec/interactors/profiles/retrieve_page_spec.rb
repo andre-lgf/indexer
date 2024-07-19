@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe(Profiles::RetrievePage, type: :interactor, vcr: true) do
+  include_context "with_url_shortener"
+
   subject(:context) { described_class.call(profile:) }
   describe ".call" do
     context "valid profile" do

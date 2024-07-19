@@ -3,8 +3,9 @@
 require "rails_helper"
 
 RSpec.describe(Profiles::Fetch, type: :interactor) do
+  include_context "with_url_shortener"
   subject(:context) { described_class.call(profile:) }
-  let(:profile) { create(:profile, github_url: "https://github.com/matz") }
+  let(:profile) { create(:profile, github_url: "https://github.com/matz", name: "Matz") }
 
   describe ".call" do
     context "valid profile" do

@@ -15,6 +15,7 @@ require "rails_helper"
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe("/profiles", type: :request) do
+  include_context "with_url_shortener"
   # This should return the minimal set of attributes required to create a valid
   # Profile. As you add validations to Profile, be sure to
   # adjust the attributes here as well.
@@ -124,6 +125,15 @@ RSpec.describe("/profiles", type: :request) do
       profile = Profile.create!(valid_attributes)
       delete profile_url(profile)
       expect(response).to(redirect_to(profiles_url))
+    end
+  end
+
+  describe "PUT /reindex" do
+    it "reindexes the requested profile" do
+      profile = Profile.create!(valid_attributes)
+      allow(FetchProfileJob).to(receive(:perform_async).with(profile.id))
+      put reindex_profile_url(profile)
+      expect(FetchProfileJob).to(have_received(:perform_async).with(profile.id))
     end
   end
 end

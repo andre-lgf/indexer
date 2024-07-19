@@ -8,8 +8,11 @@ module Profiles
 
     def call
       ApplicationRecord.transaction do
-        # TODO: upsert organizations and associate with profile
         context.profile.update!(context.personal_data.merge(indexing_status: :completed))
+        return if context.organizations.blank?
+
+        org_ids = Organization.upsert_all(context.organizations, unique_by: %i[name organization_url], returning: :id)
+        context.profile.organization_ids = org_ids.rows.flatten
       end
     end
 

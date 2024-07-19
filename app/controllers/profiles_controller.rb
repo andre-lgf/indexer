@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: %i[show edit update destroy]
+  before_action :set_profile, only: %i[show edit update destroy reindex]
 
   # GET /profiles or /profiles.json
   def index
@@ -57,6 +57,15 @@ class ProfilesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(profiles_url, notice: "Profile was successfully destroyed.") }
       format.json { head(:no_content) }
+    end
+  end
+
+  # PUT /profiles/1/reindex
+  def reindex
+    FetchProfileJob.perform_async(@profile.id)
+    respond_to do |format|
+      format.html { redirect_to(profile_url(@profile), notice: "Reindexing profile.") }
+      format.json { render(:show, status: :ok, location: @profile) }
     end
   end
 
