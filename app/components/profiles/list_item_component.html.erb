@@ -1,0 +1,15 @@
+<%= turbo_frame_tag dom_id @profile do %>
+  <div class="grid grid-cols-8 grid-flow-row-dense gap-4 py-5 border-t min-w-full items-center justify-between">
+    <% if @profile.profile_image_url %>
+      <%= link_to @profile, data: { turbo_frame: "_top" } do
+        image_tag @profile.profile_image_url, class: 'rounded-full w-20'
+      end %>
+    <% end %>
+    <div class='col-span-5'>
+      <div class='font-bold text-xl'><%= @profile.name %></div>
+      <div><%= @profile.username %></div>
+    </div>
+    <div class='<%= status_class %> text-center'><%= index_status %></div>
+    <%= render Dropdown::ActionsComponent.new(resource: @profile) %>
+  </div>
+<% end %>

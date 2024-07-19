@@ -1,0 +1,36 @@
+<%= form_with(
+  url: @url,
+  method: :get,
+  class: 'mb-5',
+  data: {
+    controller: "submit-form",
+    submit_form_target: "form",
+    turbo_frame: @turbo_trame
+  }
+) do |f| %>
+  <div class='flex'>
+    <div class='flex-1'>
+      <%= render Forms::InputFieldComponent.new(
+        input_name: :query,
+        label: @label,
+        value: params[:query],
+        placeholder: @placeholder,
+        data: {
+          action: "input->submit-form#submit",
+          submit_form_target: 'search'
+        },
+      ) %>
+    </div>
+    <div class>
+      <%= render Forms::CheckboxComponent.new(
+          input_name: :use_es,
+          label: 'Usar Elasticsearch',
+          checked: params[:use_es].to_i == 1,
+          data: {
+          action: "input->submit-form#submit",
+          submit_form_target: 'search'
+        },
+      ) %>
+    </div>
+  </div>
+<% end %>

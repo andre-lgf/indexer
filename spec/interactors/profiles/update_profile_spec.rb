@@ -4,6 +4,7 @@ require "spec_helper"
 
 RSpec.describe(Profiles::UpdateProfile, type: :interactor) do
   include_context "with_url_shortener"
+  include_context "with_elastic"
 
   subject(:context) { described_class.call(profile:, personal_data:, organizations:) }
   let(:profile) { create(:profile) }

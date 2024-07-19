@@ -1,0 +1,16 @@
+<div class='ml-auto'>
+  <div class="relative" data-controller="dropdown" data-dropdown-active-target='#<%= dom_id @resource %>'>
+    <div data-action="click->dropdown#toggle click@window->dropdown#hide" role="button" data-dropdown-target="button" tabindex="0" class="select-none">
+      <i class='ti ti-dots text-3xl px-3 py-1 text-gray hover:bg-gray-light hover:rounded-xl hover:text-gray-dark hover:cursor-pointer'></i>
+    </div>
+    <div id='<%= dom_id @resource %>' data-dropdown-target="menu" class="absolute right-0 top-4 mb-1 hidden z-10">
+      <div class="bg-white shadow rounded-xl border overflow-hidden">
+        <%= content if @prepend_items %>
+        <%= render Dropdown::ItemComponent.new(icon: 'eye', title: 'Show', url: resource_show_path, data: { turbo_frame: '_top' }) if @show %>
+        <%= render Dropdown::ItemComponent.new(icon: 'edit', title: 'Edit', url: resource_edit_path) if @edit %>
+        <%= render Dropdown::ItemComponent.new(icon: 'trash', title: 'Destroy', url: @resource, destroy: true, icon_class: 'text-red') if @delete %>
+        <%= content unless @prepend_items %>
+      </div>
+    </div>
+  </div>
+</div>

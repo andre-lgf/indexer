@@ -28,6 +28,7 @@ module Profiles
       interactor.call
       context.profile.completed!
     rescue => e
+      Rollbar.error("[Profiles::Fetch]=>#{e.context.errors}", log: e.context.errors)
       context.fail!(errors: e.context.errors)
     end
   end

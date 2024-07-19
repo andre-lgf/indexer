@@ -1,67 +1,16 @@
-<%= form_with(model: profile, class: "contents") do |form| %>
-  <% if profile.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
-
-      <ul>
-        <% profile.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<%= form_with(model: profile, class: "contents w-full") do |form| %>
+  <% %i[name github_url].each do |field| %>
+    <div class='lg:whitespace-nowrap'>
+      <%= render Forms::InputFieldComponent.new(
+      object: @profile,
+      input_name: field,
+      value: @profile.public_send(field),
+      label: field
+    ) %>
     </div>
   <% end %>
-
-  <div class="my-5">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :github_url %>
-    <%= form.text_field :github_url, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :username %>
-    <%= form.text_field :username, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :num_followers %>
-    <%= form.number_field :num_followers, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :num_following %>
-    <%= form.number_field :num_following, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :num_stars %>
-    <%= form.number_field :num_stars, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :last_year_contrib %>
-    <%= form.number_field :last_year_contrib, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :profile_image_url %>
-    <%= form.text_field :profile_image_url, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :location %>
-    <%= form.text_field :location, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :indexing_status %>
-    <%= form.number_field :indexing_status, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  <div class='mt-5'>
+    <%= form.submit("Confirm", class: 'default-button', data: ) %>
+    <%= link_to "Cancel", profiles_path, class: "default-button bg-red hover:bg-red-dark", data: %>
   </div>
 <% end %>

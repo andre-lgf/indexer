@@ -1,0 +1,10 @@
+<div class='flex flex-col items-center justify-center text-center my-12'>
+  <%= render IconComponent.new(icon: @icon, color: @icon_color, size: 'text-8xl', background_color: @icon_background_color) %>
+  <h1 class='my-5 text-4xl font-semibold'>Add <%= normalized_resource %></h1>
+  <p class='pb-8 text-gray'><%= info %></p>
+  <%= turbo_frame_tag @frame_tag do %>
+    <%= link_to new_resource_url, class: 'rounded-xl bg-green font-semibold text-white py-3 px-5 hover:bg-green-dark flex items-center justify-center' do %>
+      <i class='ti ti-plus mr-3 text-xl font-bold'></i><span><%= normalized_resource %></span>
+    <% end %>
+  <% end %>
+</div>

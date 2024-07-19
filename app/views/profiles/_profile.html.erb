@@ -3,50 +3,45 @@
     <strong class="block font-medium mb-1">Name:</strong>
     <%= profile.name %>
   </p>
-
   <p class="my-5">
     <strong class="block font-medium mb-1">Github url:</strong>
     <%= profile.github_url %>
   </p>
-
   <p class="my-5">
     <strong class="block font-medium mb-1">Username:</strong>
     <%= profile.username %>
   </p>
-
   <p class="my-5">
     <strong class="block font-medium mb-1">Num followers:</strong>
     <%= profile.num_followers %>
   </p>
-
   <p class="my-5">
     <strong class="block font-medium mb-1">Num following:</strong>
     <%= profile.num_following %>
   </p>
-
   <p class="my-5">
     <strong class="block font-medium mb-1">Num stars:</strong>
     <%= profile.num_stars %>
   </p>
-
   <p class="my-5">
     <strong class="block font-medium mb-1">Last year contrib:</strong>
     <%= profile.last_year_contrib %>
   </p>
-
   <p class="my-5">
     <strong class="block font-medium mb-1">Profile image url:</strong>
     <%= profile.profile_image_url %>
   </p>
-
   <p class="my-5">
     <strong class="block font-medium mb-1">Location:</strong>
     <%= profile.location %>
   </p>
-
   <p class="my-5">
     <strong class="block font-medium mb-1">Indexing status:</strong>
     <%= profile.indexing_status %>
   </p>
-
+  <% if action_name != "show" %>
+    <%= link_to "Show this profile", profile, class: "rounded-lg py-3 px-5 bg-gray-light inline-block font-medium" %>
+    <%= link_to 'Edit this profile', edit_profile_path(profile), class: "rounded-lg py-3 ml-2 px-5 bg-gray-light inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
 </div>

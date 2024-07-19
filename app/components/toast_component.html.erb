@@ -1,0 +1,6 @@
+<div
+  class="rounded-xl mb-1 <%= 'fade-animated' if @fade %> <%= @type.eql?(:notice) ? 'bg-green' : 'bg-red' %> text-center"
+  data-controller="removals"
+  data-action="animationend->removals#remove">
+  <div class='py-3 px-5 text-white'><%= @message %></div>
+</div>

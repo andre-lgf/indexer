@@ -1,7 +1,10 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New profile</h1>
-
-  <%= render "form", profile: @profile %>
-
-  <%= link_to "Back to profiles", profiles_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+<div class='w-full'>
+  <%= turbo_frame_tag "new-profile" do %>
+    <%= render CardComponent.new do %>
+      <%= render Cards::SectionComponent.new(title: "Novo Perfil") do %>
+        <%= render "form", profile: @profile, data: { } %>
+        <%# we can pass { turbo_frame: '_top' } as data so it reloads the whole page when clicked %>
+      <% end %>
+    <% end %>
+  <% end %>
 </div>

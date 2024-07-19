@@ -6,13 +6,15 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
-  <body>
+  <body class='bg-slate-200'>
     <main class="container mx-auto mt-28 px-5 flex">
+      <div id="flash" class="flash ml-auto">
+        <%= render 'layouts/flash' %>
+      </div>
       <%= yield %>
     </main>
   </body>

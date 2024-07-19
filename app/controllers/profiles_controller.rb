@@ -7,7 +7,16 @@ class ProfilesController < ApplicationController
 
   # GET /profiles or /profiles.json
   def index
-    @pagy, @profiles = pagy(profiles.load_async)
+    if params[:use_es].to_i == 1
+      collection = Profile.pagy_search(query || "*")
+      if collection.any?
+        @pagy, @profiles = pagy_searchkick(collection, items: 10)
+      else
+        @profiles = collection
+      end
+    else
+      @pagy, @profiles = pagy(profiles.load_async, items: 10)
+    end
   end
 
   # GET /profiles/1 or /profiles/1.json
@@ -32,9 +41,37 @@ class ProfilesController < ApplicationController
         FetchProfileJob.perform_async(@profile.id)
         format.html { redirect_to(profile_url(@profile), notice: "Profile was successfully created.") }
         format.json { render(:show, status: :created, location: @profile) }
+        format.turbo_stream do
+          flash.now[:notice] = "Profile was successfully created"
+          if profiles.size.eql?(1)
+            render(turbo_stream: [
+              turbo_stream.prepend("flash", partial: "layouts/flash"),
+              turbo_stream.update("profiles-index", html: render_to_string(::Records::IndexComponent.new(
+                collection: profiles,
+                resource_model: Profile,
+                resource_icon: "user",
+              ))),
+            ])
+          else
+            render(turbo_stream: [
+              turbo_stream.append("profiles", html: render_to_string(::Profiles::ListItemComponent.new(
+                profile: @profile,
+              ))),
+              turbo_stream.prepend("flash", partial: "layouts/flash"),
+              turbo_stream.update("new-profile", html: render_to_string(::Forms::NewResourceButtonComponent.new(
+                url: new_profile_path,
+                resource_name: Profile.normalized_resource,
+              ))),
+            ])
+          end
+        end
       else
         format.html { render(:new, status: :unprocessable_entity) }
         format.json { render(json: @profile.errors, status: :unprocessable_entity) }
+        format.turbo_stream do
+          flash.now[:error] = @profile.errors.full_messages.join("\n")
+          render(turbo_stream: turbo_stream.prepend("flash", partial: "layouts/flash"))
+        end
       end
     end
   end
@@ -45,9 +82,25 @@ class ProfilesController < ApplicationController
       if @profile.update(profile_params)
         format.html { redirect_to(profile_url(@profile), notice: "Profile was successfully updated.") }
         format.json { render(:show, status: :ok, location: @profile) }
+        format.turbo_stream do
+          flash.now[:notice] = "Profile was successfully updated."
+          render(turbo_stream: [
+            turbo_stream.update("#{@profile}-full", html: render_to_string(::Profiles::RecordComponent.new(
+              profile: @profile,
+            ))),
+            turbo_stream.update(@profile, html: render_to_string(::Profiles::ListItemComponent.new(
+              profile: @profile,
+            ))),
+            turbo_stream.prepend("flash", partial: "layouts/flash"),
+          ])
+        end
       else
         format.html { render(:edit, status: :unprocessable_entity) }
         format.json { render(json: @profile.errors, status: :unprocessable_entity) }
+        format.turbo_stream do
+          flash.now[:error] = @profile.errors.full_messages.join("\n")
+          render(turbo_stream: turbo_stream.prepend("flash", partial: "layouts/flash"))
+        end
       end
     end
   end
@@ -55,10 +108,28 @@ class ProfilesController < ApplicationController
   # DELETE /profiles/1 or /profiles/1.json
   def destroy
     @profile.destroy!
-
+    Profile.searchkick_index.remove(@profile)
     respond_to do |format|
       format.html { redirect_to(profiles_url, notice: "Profile was successfully destroyed.") }
       format.json { head(:no_content) }
+      format.turbo_stream do
+        flash.now[:notice] = "Profile was successfully destroyed."
+        if profiles.empty?
+          render(turbo_stream: [
+            turbo_stream.prepend("flash", partial: "layouts/flash"),
+            turbo_stream.update("profiles-index", html: render_to_string(::Records::IndexComponent.new(
+              collection: profiles,
+              resource_model: Profile,
+              resource_icon: "user",
+            ))),
+          ])
+        else
+          render(turbo_stream: [
+            turbo_stream.remove(@profile),
+            turbo_stream.prepend("flash", partial: "layouts/flash"),
+          ])
+        end
+      end
     end
   end
 
@@ -88,10 +159,13 @@ class ProfilesController < ApplicationController
 
   def profiles
     relation = Profile.all
-    return relation unless query
+    return relation if query
 
-    relation.where("name LIKE :term or username LIKE :term or location LIKE :term", term: "%#{query}%")
+    relation.left_outer_joins(:organizations).where(
+      "profiles.name ILIKE :term or username ILIKE :term or location ILIKE :term OR organizations.name ILIKE :term",
+      term: "%#{query}%",
+    ).distinct
   end
 
-  def query = @query ||= params[:query]
+  def query = @query ||= params[:query].presence
 end

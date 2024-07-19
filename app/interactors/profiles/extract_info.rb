@@ -16,7 +16,7 @@ module Profiles
                                    end.css("span.text-bold").text.gsub("k", "00"))
       location = context.page.css("ul.vcard-details li.vcard-detail").reverse.find do |li|
         li[:itemprop] == "homeLocation"
-      end.text.strip
+      end&.text&.strip
       num_stars = context.page.css("a").find { |a| a[:href] =~ /stars/ }.at_css("span.Counter").text.to_i
       last_year_contrib = context.page.css("div.js-yearly-contributions h2").text.strip.split("\n").first.to_i
       profile_image_url = context.page.at_css("img.avatar.avatar-user")[:src]

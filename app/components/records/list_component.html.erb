@@ -1,0 +1,30 @@
+<% if @show_title %>
+  <div class="flex justify-between items-center px-2 py-2">
+    <h1 class="font-semibold text-4xl pb-8"><%= @title || @resource_model.normalized_resource %></h1>
+  </div>
+<% end %>
+<%= render Forms::SearchFieldComponent.new(
+  turbo_frame: @index_frame_tag_id,
+  placeholder: @search_placeholder,
+  label: t('actions.search'),
+  url: @search_url
+) if @searchable %>
+<div class='my-8 py-4'>
+  <%= turbo_frame_tag @frame_tag do %>
+    <%= render Forms::NewResourceButtonComponent.new(
+      url: new_resource_path,
+      resource_name: @resource_model.normalized_resource
+    ) %>
+  <% end %>
+</div>
+<%= render CardComponent.new do %>
+  <%= render Cards::SectionComponent.new do %>
+    <div class='min-w-full mb-8 -mt-3'>
+      <%= render "#{@resource_model}s::ListHeaderComponent".constantize.new %>
+      <%= turbo_frame_tag @list_resource_frame_tag do %>
+        <%= render "#{@resource_model}s::ListItemComponent".constantize.with_collection(@collection) %>
+      <% end %>
+    </div>
+  <% end %>
+<% end if @collection.any? %>
+<%= render PaginationComponent.new(pagy: @pagy) if @pagy %>

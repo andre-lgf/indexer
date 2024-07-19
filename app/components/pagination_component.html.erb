@@ -1,0 +1,8 @@
+<div class='w-full mt-8 mb-2 flex justify-center'>
+  <div class='flex flex-col items-center'>
+    <%== pagy_nav(@pagy, link_extra: 'data-turbo-action="advance"') if @pagy.pages > 1 %>
+    <div class='my-5'>
+      <%== pagy_info(@pagy) %>
+    </div>
+  </div>
+</div>

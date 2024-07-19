@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe(Profile, type: :model) do
   include_context "with_url_shortener"
+  include_context "with_elastic"
 
   context "validations" do
     it "requires both name and github url" do
@@ -46,6 +47,14 @@ RSpec.describe(Profile, type: :model) do
         expect do
           profile.update(github_url: Faker::Internet.url(host: "github.com"))
         end.to(raise_error(ActiveModel::StrictValidationFailed))
+      end
+    end
+
+    context "when saving" do
+      let(:profile) { create(:profile) }
+      it "reindexes profile into Elasticsearch" do
+        profile.update(name: "Some name")
+        expect(profile).to(have_received(:reindex).at_least(:once))
       end
     end
   end

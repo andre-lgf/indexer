@@ -1,0 +1,8 @@
+<div class='flex flex-col items-start <%= custom_colspan %>'>
+  <%= label @object, @input_name, @label, class: LABEL_CLASS %>
+  <% if input_type.eql?(:select) %>
+    <%= select(@object, @input_name, options_for_select(@input_options, @value), @options.has_key?(:include_blank) ? {prompt: 'Select'} : {}, {class: INPUT_CLASS, disabled: @disabled, data: @data}.merge!(@options)) %>
+  <% else %>
+    <%= method(input_type).call(@object, @input_name, {class: INPUT_CLASS, value: @value, placeholder: placeholder, required: @required, disabled: @disabled, data: @data}.merge!(@options)) %>
+  <% end %>
+</div>

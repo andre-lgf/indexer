@@ -1,0 +1,15 @@
+<div class="flex items-end my-3 w-full <%= custom_colspan %>">
+  <%= label @object, @input_name, class: "flex #{@flex_direction} justify-evenly items-center cursor-pointer" do %>
+    <!-- toggle -->
+    <div class="relative">
+      <!-- input -->
+      <%= check_box @object, @input_name, class: 'sr-only', checked: @checked, data: @data %>
+      <!-- line -->
+      <div class="block bg-gray w-14 h-8 rounded-full"></div>
+      <!-- dot -->
+      <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition hover:bg-green-light"></div>
+    </div>
+    <!-- label -->
+    <div class="mx-3 text-gray-dark font-medium mb-2"><%= @label %></div>
+  <% end %>
+</div>

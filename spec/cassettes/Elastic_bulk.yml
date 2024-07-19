@@ -1,0 +1,143 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:9200/_bulk
+    body:
+      encoding: UTF-8
+      string: |
+        {"index":{"_index":"profiles_test","_id":1140}}
+        {"name":"Germaine Nienow","username":null,"location":null,"organizations":""}
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      User-Agent:
+      - 'elasticsearch-ruby/8.14.0; elastic-transport-ruby/8.3.5; RUBY_VERSION: 3.3.2;
+        darwin arm64'
+      X-Elastic-Client-Meta:
+      - es=8.14.0,rb=3.3.2,t=8.3.5,fd=2.10.0,nh=0.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Elastic-Product:
+      - Elasticsearch
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '210'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"took":264,"errors":false,"items":[{"index":{"_index":"profiles_test","_id":"1140","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":0,"_primary_term":1,"status":201}}]}'
+  recorded_at: Fri, 19 Jul 2024 19:14:56 GMT
+- request:
+    method: post
+    uri: http://localhost:9200/_bulk
+    body:
+      encoding: UTF-8
+      string: |
+        {"index":{"_index":"profiles_test","_id":1140}}
+        {"name":"Germaine Nienow","username":null,"location":null,"organizations":""}
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      User-Agent:
+      - 'elasticsearch-ruby/8.14.0; elastic-transport-ruby/8.3.5; RUBY_VERSION: 3.3.2;
+        darwin arm64'
+      X-Elastic-Client-Meta:
+      - es=8.14.0,rb=3.3.2,t=8.3.5,fd=2.10.0,nh=0.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Elastic-Product:
+      - Elasticsearch
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '208'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"took":5,"errors":false,"items":[{"index":{"_index":"profiles_test","_id":"1140","_version":2,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":1,"_primary_term":1,"status":200}}]}'
+  recorded_at: Fri, 19 Jul 2024 19:14:56 GMT
+- request:
+    method: post
+    uri: http://localhost:9200/_bulk
+    body:
+      encoding: UTF-8
+      string: |
+        {"index":{"_index":"profiles_test","_id":1140}}
+        {"name":"Some name","username":null,"location":null,"organizations":""}
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      User-Agent:
+      - 'elasticsearch-ruby/8.14.0; elastic-transport-ruby/8.3.5; RUBY_VERSION: 3.3.2;
+        darwin arm64'
+      X-Elastic-Client-Meta:
+      - es=8.14.0,rb=3.3.2,t=8.3.5,fd=2.10.0,nh=0.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Elastic-Product:
+      - Elasticsearch
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '208'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"took":2,"errors":false,"items":[{"index":{"_index":"profiles_test","_id":"1140","_version":3,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":2,"_primary_term":1,"status":200}}]}'
+  recorded_at: Fri, 19 Jul 2024 19:14:56 GMT
+- request:
+    method: post
+    uri: http://localhost:9200/_bulk
+    body:
+      encoding: UTF-8
+      string: |
+        {"index":{"_index":"profiles_test","_id":1140}}
+        {"name":"Some name","username":null,"location":null,"organizations":""}
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      User-Agent:
+      - 'elasticsearch-ruby/8.14.0; elastic-transport-ruby/8.3.5; RUBY_VERSION: 3.3.2;
+        darwin arm64'
+      X-Elastic-Client-Meta:
+      - es=8.14.0,rb=3.3.2,t=8.3.5,fd=2.10.0,nh=0.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Elastic-Product:
+      - Elasticsearch
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '208'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"took":2,"errors":false,"items":[{"index":{"_index":"profiles_test","_id":"1140","_version":4,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":3,"_primary_term":1,"status":200}}]}'
+  recorded_at: Fri, 19 Jul 2024 19:14:56 GMT
+recorded_with: VCR 6.2.0

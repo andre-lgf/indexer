@@ -1,0 +1,5 @@
+<div class='fixed right-0 mr-7'>
+  <% flash.each do |type, message| %>
+    <%= render ToastComponent.new(type:, message:) %>
+  <% end %>
+</div>

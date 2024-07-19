@@ -16,6 +16,7 @@ require "rails_helper"
 
 RSpec.describe("/profiles", type: :request) do
   include_context "with_url_shortener"
+  include_context "with_elastic"
   # This should return the minimal set of attributes required to create a valid
   # Profile. As you add validations to Profile, be sure to
   # adjust the attributes here as well.
@@ -31,10 +32,36 @@ RSpec.describe("/profiles", type: :request) do
     end
 
     context "with query" do
-      it "renders a successful response" do
-        Profile.create!(valid_attributes)
-        get profiles_url, params: { query: "some query" }
-        expect(response).to(be_successful)
+      context "without elastic" do
+        it "renders a successful response" do
+          Profile.create!(valid_attributes)
+          get profiles_url, params: { query: "some query" }
+          expect(response).to(be_successful)
+        end
+      end
+
+      context "with elastic", vcr: true do
+        it "renders a successful response" do
+          Profile.create!(valid_attributes)
+          get profiles_url, params: { query: "some query", use_es: 1 }
+          expect(response).to(be_successful)
+        end
+
+        context "without matching records" do
+          it "renders a successful response" do
+            allow(Profile).to(receive(:pagy_search).and_return([]))
+            get profiles_url, params: { query: "some query", use_es: 1 }
+            expect(response).to(be_successful)
+          end
+        end
+
+        context "with blank query", vcr: true do
+          it "renders a successful response" do
+            allow(Profile).to(receive(:pagy_search).and_return([]))
+            get profiles_url, params: { query: "", use_es: 1 }
+            expect(response).to(be_successful)
+          end
+        end
       end
     end
   end
@@ -63,14 +90,14 @@ RSpec.describe("/profiles", type: :request) do
   end
 
   describe "POST /create" do
-    context "with valid parameters" do
+    context "with valid parameters", vcr: true do
       it "creates a new Profile" do
         expect do
           post(profiles_url, params: { profile: valid_attributes })
         end.to(change(Profile, :count).by(1))
       end
 
-      it "redirects to the created profile" do
+      it "redirects to the created profile", vcr: true do
         post profiles_url, params: { profile: valid_attributes }
         expect(response).to(redirect_to(profile_url(Profile.last)))
       end
@@ -97,14 +124,14 @@ RSpec.describe("/profiles", type: :request) do
         { name: new_name }
       end
 
-      it "updates the requested profile" do
+      it "updates the requested profile", vcr: true do
         profile = Profile.create!(valid_attributes)
         patch profile_url(profile), params: { profile: new_attributes }
         profile.reload
         expect(profile.name).to(eq(new_name))
       end
 
-      it "redirects to the profile" do
+      it "redirects to the profile", vcr: true do
         profile = Profile.create!(valid_attributes)
         patch profile_url(profile), params: { profile: new_attributes }
         profile.reload
@@ -122,14 +149,14 @@ RSpec.describe("/profiles", type: :request) do
   end
 
   describe "DELETE /destroy" do
-    it "destroys the requested profile" do
+    it "destroys the requested profile", vcr: true do
       profile = Profile.create!(valid_attributes)
       expect do
         delete(profile_url(profile))
       end.to(change(Profile, :count).by(-1))
     end
 
-    it "redirects to the profiles list" do
+    it "redirects to the profiles list", vcr: true do
       profile = Profile.create!(valid_attributes)
       delete profile_url(profile)
       expect(response).to(redirect_to(profiles_url))
@@ -137,11 +164,95 @@ RSpec.describe("/profiles", type: :request) do
   end
 
   describe "PUT /reindex" do
-    it "reindexes the requested profile" do
+    it "reindexes the requested profile", vcr: true do
       profile = Profile.create!(valid_attributes)
       allow(FetchProfileJob).to(receive(:perform_async).with(profile.id))
       put reindex_profile_url(profile)
       expect(FetchProfileJob).to(have_received(:perform_async).with(profile.id))
+    end
+  end
+
+  describe "turbo streams" do
+    describe "GET /show" do
+      it "renders a successful response" do
+        profile = Profile.create!(valid_attributes)
+        get profile_url(profile, as: :turbo_stream)
+        expect(response).to(be_successful)
+      end
+    end
+
+    describe "POST /create" do
+      context "with valid parameters" do
+        it "creates a new Profile", vcr: true do
+          expect do
+            post(profiles_url, params: { profile: valid_attributes }, as: :turbo_stream)
+          end.to(change(Profile, :count).by(1))
+        end
+
+        context "when it's not the first record" do
+          it "returns different stream", vcr: true do
+            Profile.create!(attributes_for(:profile))
+            expect do
+              post(profiles_url, params: { profile: valid_attributes }, as: :turbo_stream)
+            end.to(change(Profile, :count).by(1))
+          end
+        end
+      end
+
+      context "with invalid parameters" do
+        it "does not create a new Profile" do
+          expect do
+            post(profiles_url, params: { profile: invalid_attributes }, as: :turbo_stream)
+          end.not_to(change(Profile, :count))
+        end
+
+        it "renders a 200 response because it's a stream" do
+          post profiles_url, params: { profile: invalid_attributes }, as: :turbo_stream
+          expect(response).to(be_successful)
+        end
+      end
+    end
+
+    describe "PATCH /update" do
+      context "with valid parameters" do
+        let(:new_attributes) do
+          { name: "New Name" }
+        end
+
+        it "updates the requested profile" do
+          profile = Profile.create!(valid_attributes)
+          patch profile_url(profile), params: { profile: new_attributes }, as: :turbo_stream
+          profile.reload
+          expect(profile.name).to(eq("New Name"))
+        end
+      end
+
+      context "with invalid parameters" do
+        it "renders a 200 response because it's a stream" do
+          profile = Profile.create!(valid_attributes)
+          patch profile_url(profile), params: { profile: invalid_attributes }, as: :turbo_stream
+          expect(response).to(be_successful)
+        end
+      end
+    end
+
+    describe "DELETE /destroy" do
+      it "destroys the requested profile", vcr: true do
+        profile = Profile.create!(valid_attributes)
+        expect do
+          delete(profile_url(profile), as: :turbo_stream)
+        end.to(change(Profile, :count).by(-1))
+      end
+
+      context "when it's not the last profile" do
+        it "destroys the requested profile and sends different stream", vcr: true do
+          Profile.create(attributes_for(:profile))
+          profile = Profile.create!(valid_attributes)
+          expect do
+            delete(profile_url(profile), as: :turbo_stream)
+          end.to(change(Profile, :count).by(-1))
+        end
+      end
     end
   end
 end

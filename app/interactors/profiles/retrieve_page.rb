@@ -14,6 +14,7 @@ module Profiles
       context.page = Nokogiri::HTML.parse(browser.html)
       browser.close
     rescue => e
+      Rollbar.error("[Profiles::Fetch]=>#{e.message}", log: e.backtrace)
       context.fail!(errors: [e.message])
     end
   end

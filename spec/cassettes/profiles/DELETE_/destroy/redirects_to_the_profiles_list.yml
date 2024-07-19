@@ -1,0 +1,38 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:9200/_bulk
+    body:
+      encoding: UTF-8
+      string: '{"delete":{"_index":"profiles_test","_id":2034}}
+
+        '
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      User-Agent:
+      - 'elasticsearch-ruby/8.14.0; elastic-transport-ruby/8.3.5; RUBY_VERSION: 3.3.2;
+        darwin arm64'
+      X-Elastic-Client-Meta:
+      - es=8.14.0,rb=3.3.2,t=8.3.5,fd=2.10.0,nh=0.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Elastic-Product:
+      - Elasticsearch
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '229'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"took":4,"errors":false,"items":[{"delete":{"_index":"profiles_test_20240719163508818","_id":"2034","_version":1,"result":"not_found","_shards":{"total":1,"successful":1,"failed":0},"_seq_no":1,"_primary_term":1,"status":404}}]}'
+  recorded_at: Fri, 19 Jul 2024 19:55:55 GMT
+recorded_with: VCR 6.2.0

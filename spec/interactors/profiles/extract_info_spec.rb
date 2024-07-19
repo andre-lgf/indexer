@@ -7,9 +7,21 @@ RSpec.describe(Profiles::ExtractInfo, type: :interactor) do
   let(:page) { Nokogiri.parse(build(:github_request).content) }
   describe ".call" do
     context "page provided" do
-      it "extracts the personal data" do
-        expect(context).to(be_a_success)
-        expect(context.personal_data).to_not(be_blank)
+      context "with_organizations" do
+        it "extracts the personal data" do
+          expect(context).to(be_a_success)
+          expect(context.personal_data).to_not(be_blank)
+        end
+      end
+
+      context "without organization", vcr: true do
+        let(:page) { Profiles::RetrievePage.call(profile: build(:profile, github_url: "https://github.com/andre-lgf")).page }
+
+        it "extracts the personal data" do
+          expect(context).to(be_a_success)
+          expect(context.personal_data).to_not(be_blank)
+          expect(context.organizations).to(be_blank)
+        end
       end
     end
 

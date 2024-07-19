@@ -1,0 +1,27 @@
+<%= turbo_frame_tag @index_frame_tag_id do %>
+  <%= render Records::EmptyComponent.new(
+    icon: @resource_icon,
+    resource: @resource_model,
+    icon_color: 'text-green',
+    icon_background_color: 'bg-green-light',
+    frame_tag: @new_resource_frame_tag_id,
+    url: @new_resource_url,
+    show_title: @show_title,
+    render: !query && empty_collection?
+  ) %>
+  <%= render Records::ListComponent.new(
+    collection: @collection,
+    resource_model: @resource_model,
+    new_resource_url: @new_resource_url,
+    frame_tag: @new_resource_frame_tag_id,
+    list_resource_frame_tag: @list_resource_frame_tag,
+    show_title: @show_title,
+    title: @title,
+    pagy: @pagy,
+    render: query || !empty_collection?,
+    searchable: @searchable,
+    search_url: @search_url,
+    search_placeholder: @search_placeholder,
+    index_frame_tag_id: @index_frame_tag_id,
+  ) %>
+<% end %>
