@@ -9,7 +9,6 @@ services:
       - "redis:/data"
 
   web:
-    platform: linux/amd64
     container_name: web
     restart: unless-stopped
     depends_on:
@@ -30,7 +29,6 @@ services:
       - ./.compose-env
 
   sidekiq:
-    platform: linux/amd64
     container_name: sidekiq
     restart: unless-stopped
     depends_on:
