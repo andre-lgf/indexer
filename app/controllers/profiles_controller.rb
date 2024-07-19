@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class ProfilesController < ApplicationController
+  include Pagy::Backend
+
   before_action :set_profile, only: %i[show edit update destroy reindex]
 
   # GET /profiles or /profiles.json
   def index
-    @profiles = Profile.all
+    @pagy, @profiles = pagy(profiles.load_async)
   end
 
   # GET /profiles/1 or /profiles/1.json
@@ -83,4 +85,13 @@ class ProfilesController < ApplicationController
       :last_year_contrib, :profile_image_url, :location, :indexing_status
     )
   end
+
+  def profiles
+    relation = Profile.all
+    return relation unless query
+
+    relation.where("name LIKE :term or username LIKE :term or location LIKE :term", term: "%#{query}%")
+  end
+
+  def query = @query ||= params[:query]
 end

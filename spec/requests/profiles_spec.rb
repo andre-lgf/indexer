@@ -29,6 +29,14 @@ RSpec.describe("/profiles", type: :request) do
       get profiles_url
       expect(response).to(be_successful)
     end
+
+    context "with query" do
+      it "renders a successful response" do
+        Profile.create!(valid_attributes)
+        get profiles_url, params: { query: "some query" }
+        expect(response).to(be_successful)
+      end
+    end
   end
 
   describe "GET /show" do

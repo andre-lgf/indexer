@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount Sidekiq::Web => "/sidekiq"
   resources :profiles do
     member do
       put :reindex
