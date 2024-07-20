@@ -42,6 +42,11 @@
               <span class='text-slate-700 mt-2'><%= t('status.profile.error') %></span>
             <% end %>
           </div>
+          <% unless @profile.in_progress? %>
+            <div class='grid justify-items-center my-5'>
+              <%= render Dropdown::ItemComponent.new(icon: 'refresh', title: t('actions.reindex'), url: reindex_profile_path(@profile), put: true) %>
+            </div>
+          <% end %>
         </div>
       </div>
       <% if @profile.organizations.any? %>
