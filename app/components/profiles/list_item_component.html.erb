@@ -4,12 +4,16 @@
       <%= link_to @profile, data: { turbo_frame: "_top" } do
         image_tag @profile.profile_image_url, class: 'rounded-full w-20'
       end %>
+    <% else %>
+      <div></div>
     <% end %>
     <div class='col-span-5'>
       <div class='font-bold text-xl'><%= @profile.name %></div>
       <div><%= @profile.username %></div>
     </div>
     <div class='<%= status_class %> text-center'><%= index_status %></div>
-    <%= render Dropdown::ActionsComponent.new(resource: @profile) %>
+    <%= render Dropdown::ActionsComponent.new(resource: @profile) do %>
+      <%= render Dropdown::ItemComponent.new(icon: 'refresh', title: t('actions.reindex'), url: reindex_profile_path(@profile), put: true) %>
+    <% end %>
   </div>
 <% end %>

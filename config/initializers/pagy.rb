@@ -218,6 +218,10 @@ Searchkick.extend(Pagy::Searchkick)
 # Pagy::I18n.load({ locale: 'de' },
 #                 { locale: 'en' },
 #                 { locale: 'es' })
+Pagy::I18n.load(
+  { locale: "pt-BR" },
+  { locale: "en" },
+)
 #
 # load the "en" built-in locale, a custom "es" locale,
 # and a totally custom locale complete with a custom :pluralize proc:

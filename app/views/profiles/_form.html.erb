@@ -10,7 +10,7 @@
     </div>
   <% end %>
   <div class='mt-5'>
-    <%= form.submit("Confirm", class: 'default-button', data: ) %>
-    <%= link_to "Cancel", profiles_path, class: "default-button bg-red hover:bg-red-dark", data: %>
+    <%= form.submit(t('actions.confirm'), class: 'default-button', data: ) %>
+    <%= link_to t('actions.cancel'), profiles_path, class: "default-button bg-red hover:bg-red-dark", data: %>
   </div>
 <% end %>

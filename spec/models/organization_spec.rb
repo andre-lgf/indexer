@@ -3,6 +3,10 @@
 require "rails_helper"
 
 RSpec.describe(Organization, type: :model) do
+  around(:each) do |example|
+    I18n.with_locale(:en) { example.run }
+  end
+
   context "validations" do
     it "requires both name and organization url" do
       expect(described_class.new.valid?).to(be_falsey)

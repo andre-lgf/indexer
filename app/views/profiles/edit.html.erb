@@ -1,9 +1,7 @@
 <div class='w-full'>
   <%= turbo_frame_tag dom_id @profile do %>
     <%= render CardComponent.new do %>
-      <%= render Cards::SectionComponent.new(
-        title: "Editing Profile",
-      ) do %>
+      <%= render Cards::SectionComponent.new(title: t('actions.add', obj: @profile.class.translated_resource)) do %>
         <%= render "form", profile: @profile, data: @data || {} %>
         <%# we can pass { turbo_frame: '_top' } as data so it reloads the whole page when clicked %>
       <% end %>

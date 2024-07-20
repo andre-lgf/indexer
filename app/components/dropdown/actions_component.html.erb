@@ -6,9 +6,9 @@
     <div id='<%= dom_id @resource %>' data-dropdown-target="menu" class="absolute right-0 top-4 mb-1 hidden z-10">
       <div class="bg-white shadow rounded-xl border overflow-hidden">
         <%= content if @prepend_items %>
-        <%= render Dropdown::ItemComponent.new(icon: 'eye', title: 'Show', url: resource_show_path, data: { turbo_frame: '_top' }) if @show %>
-        <%= render Dropdown::ItemComponent.new(icon: 'edit', title: 'Edit', url: resource_edit_path) if @edit %>
-        <%= render Dropdown::ItemComponent.new(icon: 'trash', title: 'Destroy', url: @resource, destroy: true, icon_class: 'text-red') if @delete %>
+        <%= render Dropdown::ItemComponent.new(icon: 'eye', title: t('actions.show'), url: resource_show_path, data: { turbo_frame: '_top' }) if @show %>
+        <%= render Dropdown::ItemComponent.new(icon: 'edit', title: t('actions.edit'), url: resource_edit_path) if @edit %>
+        <%= render Dropdown::ItemComponent.new(icon: 'trash', title: t('actions.destroy'), url: @resource, destroy: true, icon_class: 'text-red') if @delete %>
         <%= content unless @prepend_items %>
       </div>
     </div>

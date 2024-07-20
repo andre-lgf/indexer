@@ -6,7 +6,7 @@ module Forms
       @url = url
       @turbo_frame = turbo_frame
       @label = label
-      @placeholder = placeholder || "Search"
+      @placeholder = placeholder || I18n.t(".actions.search")
       @allow_elastic = allow_elastic
       super
     end

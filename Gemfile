@@ -52,6 +52,7 @@ gem 'interactor-rails'
 gem 'kamal', require: false
 gem 'pagy'
 gem 'rest-client'
+gem 'rails-i18n'
 gem 'rollbar'
 gem 'searchkick'
 gem "selenium-webdriver"

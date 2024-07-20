@@ -236,6 +236,15 @@ RSpec.describe("/profiles", type: :request) do
       end
     end
 
+    describe "PUT /reindex" do
+      it "reindexes the requested profile", vcr: true do
+        profile = Profile.create!(valid_attributes)
+        allow(FetchProfileJob).to(receive(:perform_async).with(profile.id))
+        put reindex_profile_url(profile), as: :turbo_stream
+        expect(FetchProfileJob).to(have_received(:perform_async).with(profile.id))
+      end
+    end
+
     describe "DELETE /destroy" do
       it "destroys the requested profile", vcr: true do
         profile = Profile.create!(valid_attributes)

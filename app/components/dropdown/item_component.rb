@@ -2,7 +2,8 @@
 
 module Dropdown
   class ItemComponent < ViewComponent::Base
-    def initialize(title:, icon:, url:, data: {}, icon_class: "text-green", destroy: false, post: false, target: nil)
+    def initialize(title:, icon:, url:, data: {}, icon_class: "text-green", destroy: false, post: false, put: false,
+      target: nil)
       @title = title
       @icon = icon
       @url = url
@@ -10,6 +11,7 @@ module Dropdown
       @icon_class = icon_class
       @destroy = destroy
       @post = post
+      @put = put
       @target = target
       super
     end

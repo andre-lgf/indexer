@@ -7,6 +7,10 @@ RSpec.describe(Profiles::Fetch, type: :interactor) do
   include_context "with_elastic"
   include_context "with_organizations_fetch"
 
+  around(:each) do |example|
+    I18n.with_locale(:en) { example.run }
+  end
+
   subject(:context) { described_class.call(profile:) }
   let(:profile) { create(:profile, github_url: "https://github.com/matz", name: "Matz") }
 

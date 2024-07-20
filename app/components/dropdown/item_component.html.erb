@@ -1,10 +1,14 @@
 <div class='m-2 hover:bg-gray-light hover:rounded-xl no-underline pl-3 pr-5 py-3 whitespace-nowrap flex items-center'>
   <% if @destroy %>
-    <%= button_to @url, method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: 'flex items-center' do %>
+    <%= button_to @url, method: :delete, form: {data: {turbo_confirm: t('actions.confirm')}}, class: 'flex items-center' do %>
       <i class='<%= full_icon_class %>'></i> <span class='font-light text-gray hover:text-red'><%= @title %></span>
     <% end %>
   <% elsif @post %>
     <%= button_to @url, method: :post, data: @data, class: "flex items-center" do %>
+      <i class='<%= full_icon_class %>'></i> <span class='font-light text-gray hover:text-gray-dark'><%= @title %></span>
+    <% end %>
+  <% elsif @put %>
+    <%= button_to @url, method: :put, data: @data, class: "flex items-center" do %>
       <i class='<%= full_icon_class %>'></i> <span class='font-light text-gray hover:text-gray-dark'><%= @title %></span>
     <% end %>
   <% else %>

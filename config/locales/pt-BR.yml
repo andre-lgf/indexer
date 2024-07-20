@@ -27,39 +27,41 @@
 #       "yes": yup
 #       enabled: "ON"
 
-en:
+pt-BR:
   activerecord:
     errors:
       messages:
-        host_not_allowed: "has invalid host"
+        host_not_allowed: "Tem host inválido"
   status:
     profile:
-      indexed: Indexed
-      indexing: Indexing
+      indexed: Indexado
+      indexing: Indexando
   models:
-    profile: Profile
-    profiles: Profiles
-    organization: Organization
-    organizations: Organizations
+    profile: Usuário
+    profiles: Usuários
+    organization: Organização
+    organizations: Organizações
   messages:
-    no_record: 'No %{obj} registered'
-    profile:
-      reindexing: "Reindexing Profile."
-      destroyed: "Profile was successfully destroyed."
-      updated: "Profile was successfully updated."
-      create: "Profile was successfully created."
+    no_record: 'Nenhum %{obj} cadastrado'
+    profiles:
+      reindexing: "Reindexando Perfil."
+      destroyed: "Perfil foi removido com sucesso."
+      updated: "Perfil foi atualizado com sucesso."
+      create: "Perfil foi criado com sucesso."
   actions:
-    search: Search
-    use_elasticsearch: Use Elasticsearch
-    show: Show
-    edit: Edit
-    destroy: Destroy
-    save: Save
-    confirm: Confirm
-    cancel: Cancel
-    back: Back
-    reindex: Reindex
-    are_you_sure: "Are you sure?"
-    add: 'Add %{obj}'
+    search: Pesquisar
+    use_elasticsearch: Usar Elasticsearch
+    show: Exibir
+    edit: Editar
+    destroy: Remover
+    save: Salvar
+    confirm: Confirmar
+    cancel: Cancelar
+    back: Voltar
+    reindex: Reindexar
+    are_you_sure: "Tem certeza?"
+    add: 'Adicionar %{obj}'
+    edit_record: 'Editar %{obj}'
+    access: Acessar
   errors:
-    missing_obj: 'missing %{obj}'
+    missing_obj: '%{obj} não encontrado'

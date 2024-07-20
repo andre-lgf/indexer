@@ -20,6 +20,7 @@ module Records
 
     def render? = @render
     def normalized_resource = @normalized_resource ||= @resource.normalized_resource
+    def translated_resource = @translated_resource ||= @resource.translated_resource
     def new_resource_url = @url || new_polymorphic_path(@resource)
     def info = @info || "No #{normalized_resource} found."
   end

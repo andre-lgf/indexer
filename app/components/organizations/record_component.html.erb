@@ -1,4 +1,4 @@
-<%= render CardComponent.new(footer: link_to("Back",  organizations_path, data: {turbo_frame: '_top'}, class: 'default-button')) do %>
+<%= render CardComponent.new(footer: link_to(t('actions.back'),  organizations_path, data: {turbo_frame: '_top'}, class: 'default-button')) do %>
   <%= render Cards::SectionComponent.new do %>
     <p class="my-5">
       <strong class="block font-medium mb-1">Name:</strong>

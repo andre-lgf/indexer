@@ -6,6 +6,10 @@ RSpec.describe(Profile, type: :model) do
   include_context "with_url_shortener"
   include_context "with_elastic"
 
+  around(:each) do |example|
+    I18n.with_locale(:en) { example.run }
+  end
+
   context "validations" do
     it "requires both name and github url" do
       expect(described_class.new.valid?).to(be_falsey)

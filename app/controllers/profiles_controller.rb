@@ -37,10 +37,10 @@ class ProfilesController < ApplicationController
     respond_to do |format|
       if @profile.save
         FetchProfileJob.perform_async(@profile.id)
-        format.html { redirect_to(profile_url(@profile), notice: "Profile was successfully created.") }
+        format.html { redirect_to(profile_url(@profile), notice: I18n.t("messages.profiles.created")) }
         format.json { render(:show, status: :created, location: @profile) }
         format.turbo_stream do
-          flash.now[:notice] = "Profile was successfully created"
+          flash.now[:notice] = I18n.t("messages.profiles.created")
           if profiles.size.eql?(1)
             render(turbo_stream: [
               turbo_stream.prepend("flash", partial: "layouts/flash"),
@@ -78,10 +78,10 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to(profile_url(@profile), notice: "Profile was successfully updated.") }
+        format.html { redirect_to(profile_url(@profile), notice: I18n.t("messages.profiles.updated")) }
         format.json { render(:show, status: :ok, location: @profile) }
         format.turbo_stream do
-          flash.now[:notice] = "Profile was successfully updated."
+          flash.now[:notice] = I18n.t("messages.profiles.updated")
           render(turbo_stream: [
             turbo_stream.update("#{@profile}-full", html: render_to_string(::Profiles::RecordComponent.new(
               profile: @profile,
@@ -108,10 +108,10 @@ class ProfilesController < ApplicationController
     @profile.destroy!
     Profile.searchkick_index.remove(@profile)
     respond_to do |format|
-      format.html { redirect_to(profiles_url, notice: "Profile was successfully destroyed.") }
+      format.html { redirect_to(profiles_url, notice: I18n.t("messages.profiles.destroyed")) }
       format.json { head(:no_content) }
       format.turbo_stream do
-        flash.now[:notice] = "Profile was successfully destroyed."
+        flash.now[:notice] = I18n.t("messages.profiles.destroyed")
         if profiles.empty?
           render(turbo_stream: [
             turbo_stream.prepend("flash", partial: "layouts/flash"),
@@ -134,9 +134,22 @@ class ProfilesController < ApplicationController
   # PUT /profiles/1/reindex
   def reindex
     FetchProfileJob.perform_async(@profile.id)
+    @profile.in_progress!
     respond_to do |format|
-      format.html { redirect_to(profile_url(@profile), notice: "Reindexing profile.") }
+      format.html { redirect_to(profile_url(@profile), notice: I18n.t("messages.profiles.reindexing")) }
       format.json { render(:show, status: :ok, location: @profile) }
+      format.turbo_stream do
+        flash.now[:notice] = I18n.t("messages.profiles.reindexing")
+        render(turbo_stream: [
+          turbo_stream.update("#{@profile}-full", html: render_to_string(::Profiles::RecordComponent.new(
+            profile: @profile,
+          ))),
+          turbo_stream.update(@profile, html: render_to_string(::Profiles::ListItemComponent.new(
+            profile: @profile,
+          ))),
+          turbo_stream.prepend("flash", partial: "layouts/flash"),
+        ])
+      end
     end
   end
 

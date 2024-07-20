@@ -10,7 +10,7 @@ class Profile < ApplicationRecord
   after_update :fetch_profile, if: :saved_change_to_github_url?
   after_update_commit :broadcast_profile
   after_save :reindex
-  enum indexing_status: { in_progress: 0, completed: 1 }
+  enum indexing_status: { in_progress: 0, completed: 1, error: 2 }
 
   has_and_belongs_to_many :organizations
 
