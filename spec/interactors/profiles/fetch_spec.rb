@@ -5,6 +5,8 @@ require "rails_helper"
 RSpec.describe(Profiles::Fetch, type: :interactor) do
   include_context "with_url_shortener"
   include_context "with_elastic"
+  include_context "with_organizations_fetch"
+
   subject(:context) { described_class.call(profile:) }
   let(:profile) { create(:profile, github_url: "https://github.com/matz", name: "Matz") }
 
@@ -21,6 +23,7 @@ RSpec.describe(Profiles::Fetch, type: :interactor) do
             Profiles::RetrievePage,
             Profiles::ExtractInfo,
             Profiles::UpdateProfile,
+            Organizations::Fetch,
           ].each do |interactor|
             expect(interactor).to(receive(:call!).ordered)
           end
@@ -41,6 +44,7 @@ RSpec.describe(Profiles::Fetch, type: :interactor) do
             Profiles::RetrievePage,
             Profiles::ExtractInfo,
             Profiles::UpdateProfile,
+            Organizations::Fetch,
           ].each do |interactor|
             expect(interactor).to(receive(:call!).ordered)
           end

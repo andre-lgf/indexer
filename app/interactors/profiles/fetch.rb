@@ -8,7 +8,8 @@ module Profiles
 
     organize RetrievePage,
       ExtractInfo,
-      UpdateProfile
+      UpdateProfile,
+      ::Organizations::Fetch
 
     around :update_processing_status
 

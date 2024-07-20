@@ -56,6 +56,7 @@ gem 'rollbar'
 gem 'searchkick'
 gem "selenium-webdriver"
 gem 'sidekiq'
+gem 'octokit'
 gem 'view_component'
 gem 'watir'
 

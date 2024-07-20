@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_18_213717) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_20_185551) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_18_213717) do
     t.string "image_url", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "gh_id"
+    t.integer "num_public_repos"
+    t.integer "num_public_gists"
+    t.integer "followers"
+    t.integer "following"
+    t.integer "num_members"
     t.index ["name", "organization_url"], name: "index_organizations_on_name_and_organization_url", unique: true
     t.index ["name"], name: "index_organizations_on_name", unique: true
     t.index ["organization_url"], name: "index_organizations_on_organization_url", unique: true
