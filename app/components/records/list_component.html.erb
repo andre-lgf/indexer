@@ -7,16 +7,19 @@
   turbo_frame: @index_frame_tag_id,
   placeholder: @search_placeholder,
   label: t('actions.search'),
-  url: @search_url
+  url: @search_url,
+  allow_elastic: @allow_elastic,
 ) if @searchable %>
-<div class='my-8 py-4'>
-  <%= turbo_frame_tag @frame_tag do %>
-    <%= render Forms::NewResourceButtonComponent.new(
-      url: new_resource_path,
-      resource_name: @resource_model.normalized_resource
-    ) %>
-  <% end %>
-</div>
+<% unless @read_only %>
+  <div class='my-8 py-4'>
+    <%= turbo_frame_tag @frame_tag do %>
+      <%= render Forms::NewResourceButtonComponent.new(
+        url: new_resource_path,
+        resource_name: @resource_model.normalized_resource
+      ) %>
+    <% end %>
+  </div>
+<% end %>
 <%= render CardComponent.new do %>
   <%= render Cards::SectionComponent.new do %>
     <div class='min-w-full mb-8 -mt-3'>

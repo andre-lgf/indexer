@@ -1,44 +1,46 @@
-<%= render CardComponent.new(footer: link_to("Back",  profiles_path, data: {turbo_frame: '_top'}, class: 'default-button')) do %>
-  <%= render Cards::SectionComponent.new do %>
-    <p class="my-5">
-      <strong class="block font-medium mb-1">Name:</strong>
-      <%= @profile.name %>
-    </p>
-    <p class="my-5">
-      <strong class="block font-medium mb-1">Github url:</strong>
-      <%= @profile.github_url %>
-    </p>
-    <p class="my-5">
-      <strong class="block font-medium mb-1">Username:</strong>
-      <%= @profile.username %>
-    </p>
-    <p class="my-5">
-      <strong class="block font-medium mb-1">Num followers:</strong>
-      <%= @profile.num_followers %>
-    </p>
-    <p class="my-5">
-      <strong class="block font-medium mb-1">Num following:</strong>
-      <%= @profile.num_following %>
-    </p>
-    <p class="my-5">
-      <strong class="block font-medium mb-1">Num stars:</strong>
-      <%= @profile.num_stars %>
-    </p>
-    <p class="my-5">
-      <strong class="block font-medium mb-1">Last year contrib:</strong>
-      <%= @profile.last_year_contrib %>
-    </p>
-    <p class="my-5">
-      <strong class="block font-medium mb-1">Profile image url:</strong>
-      <%= @profile&.profile_image_url %>
-    </p>
-    <p class="my-5">
-      <strong class="block font-medium mb-1">Location:</strong>
-      <%= @profile.location %>
-    </p>
-    <p class="my-5">
-      <strong class="block font-medium mb-1">Indexing status:</strong>
-      <%= @profile.indexing_status %>
-    </p>
+<div class='w-full'>
+  <%= render CardComponent.new(footer: link_to("Back",  profiles_path, data: {turbo_frame: '_top'}, class: 'default-button')) do %>
+    <%= render Cards::SectionComponent.new do %>
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Name:</strong>
+        <%= @profile.name %>
+      </p>
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Github url:</strong>
+        <%= @profile.github_url %>
+      </p>
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Username:</strong>
+        <%= @profile.username %>
+      </p>
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Num followers:</strong>
+        <%= @profile.num_followers %>
+      </p>
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Num following:</strong>
+        <%= @profile.num_following %>
+      </p>
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Num stars:</strong>
+        <%= @profile.num_stars %>
+      </p>
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Last year contrib:</strong>
+        <%= @profile.last_year_contrib %>
+      </p>
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Profile image url:</strong>
+        <%= @profile&.profile_image_url %>
+      </p>
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Location:</strong>
+        <%= @profile.location %>
+      </p>
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Indexing status:</strong>
+        <%= @profile.indexing_status %>
+      </p>
+    <% end %>
   <% end %>
-<% end %>
+</div>

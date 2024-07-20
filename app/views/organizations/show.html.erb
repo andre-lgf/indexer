@@ -1,0 +1,5 @@
+<div class='w-full'>
+  <%= turbo_frame_tag "#{dom_id @organization}-full" do %>
+    <%= render ::Organizations::RecordComponent.new(organization: @organization) %>
+  <% end %>
+</div>

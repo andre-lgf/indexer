@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ProfilesController < ApplicationController
-  include Pagy::Backend
-
   before_action :set_profile, only: %i[show edit update destroy reindex]
 
   # GET /profiles or /profiles.json
@@ -159,13 +157,11 @@ class ProfilesController < ApplicationController
 
   def profiles
     relation = Profile.all
-    return relation if query
+    return relation unless query
 
     relation.left_outer_joins(:organizations).where(
       "profiles.name ILIKE :term or username ILIKE :term or location ILIKE :term OR organizations.name ILIKE :term",
       term: "%#{query}%",
     ).distinct
   end
-
-  def query = @query ||= params[:query].presence
 end

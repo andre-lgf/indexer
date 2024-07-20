@@ -1,0 +1,12 @@
+<%= turbo_frame_tag dom_id @organization do %>
+  <div class="grid grid-cols-8 grid-flow-row-dense gap-4 py-5 border-t min-w-full items-center justify-between">
+    <% if @organization.image_url %>
+      <%= link_to @organization, data: { turbo_frame: "_top" } do
+        image_tag @organization.image_url, class: 'rounded-full w-20'
+      end %>
+    <% end %>
+    <div class='col-span-5'>
+      <div class='font-bold text-xl'><%= @organization.name %></div>
+    </div>
+  </div>
+<% end %>

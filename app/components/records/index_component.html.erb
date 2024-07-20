@@ -7,6 +7,7 @@
     frame_tag: @new_resource_frame_tag_id,
     url: @new_resource_url,
     show_title: @show_title,
+    read_only: @read_only,
     render: !query && empty_collection?
   ) %>
   <%= render Records::ListComponent.new(
@@ -23,5 +24,7 @@
     search_url: @search_url,
     search_placeholder: @search_placeholder,
     index_frame_tag_id: @index_frame_tag_id,
+    read_only: @read_only,
+    allow_elastic: @allow_elastic
   ) %>
 <% end %>

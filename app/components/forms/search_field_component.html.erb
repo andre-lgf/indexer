@@ -21,16 +21,18 @@
         },
       ) %>
     </div>
-    <div class>
-      <%= render Forms::CheckboxComponent.new(
-          input_name: :use_es,
-          label: 'Usar Elasticsearch',
-          checked: params[:use_es].to_i == 1,
-          data: {
-          action: "input->submit-form#submit",
-          submit_form_target: 'search'
-        },
-      ) %>
-    </div>
+    <% if @allow_elastic %>
+      <div>
+        <%= render Forms::CheckboxComponent.new(
+            input_name: :use_es,
+            label: 'Usar Elasticsearch',
+            checked: params[:use_es].to_i == 1,
+            data: {
+            action: "input->submit-form#submit",
+            submit_form_target: 'search'
+          },
+        ) %>
+      </div>
+    <% end %>
   </div>
 <% end %>

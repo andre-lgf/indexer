@@ -1,0 +1,11 @@
+<div class="w-full">
+  <%= render Records::IndexComponent.new(
+    collection: @organizations,
+    title: 'Organizações',
+    resource_model: Organization,
+    resource_icon: 'building',
+    searchable: true,
+    pagy: @pagy,
+    read_only: true
+  ) %>
+</div>
