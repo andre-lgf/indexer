@@ -27,5 +27,6 @@ module Indexer
     # config.eager_load_paths << Rails.root.join("extras")
     config.i18n.available_locales = %i[pt-BR en]
     config.i18n.default_locale = :"pt-BR"
+    config.hosts += ["68.183.146.73", "localhost", "www.example.com"]
   end
 end

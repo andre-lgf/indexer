@@ -14,7 +14,7 @@ module Records
       @resource_icon = resource_icon
       @collection = collection
       @turbo_frame_resource_name = turbo_frame_resource_name
-      @list_resource_frame_tag = list_resource_frame_tag || "#{turbo_resource_name}s"
+      @list_resource_frame_tag = list_resource_frame_tag || "#{turbo_resource_name}s_list"
       @new_resource_frame_tag_id = new_resource_frame_tag || "new-#{turbo_resource_name}"
       @index_frame_tag_id = index_frame_tag || "#{turbo_resource_name}s-index"
       @new_resource_url = new_resource_url

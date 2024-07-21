@@ -1,69 +1,71 @@
-<div class='w-full'>
-  <%= render CardComponent.new(footer: link_to(t('actions.back'),  profiles_path, data: {turbo_frame: '_top'}, class: 'default-button')) do %>
-    <%= render Cards::SectionComponent.new do %>
-      <div class='grid justify-items-center'>
-        <%= image_tag @profile.profile_image_url, class: 'rounded-full w-60 mb-5' if @profile.profile_image_url %>
-        <div class='text-xl font-bold'><%= @profile.name %></div>
-        <div class='text-xl text-slate-600'><%= @profile.username %></div>
-        <div class='grid gap-3 lg:grid-cols-4 md:grid-cols-2 w-full my-5'>
-          <div class='grid justify-items-center my-5'>
-            <i class='ti ti-brand-github text-2xl p-4 rounded-full bg-black text-white'></i>
-            <span class='text-slate-700 mt-2 hover:text-blue-800'><%= link_to t('actions.access'), @profile.shortened_url %></span>
-          </div>
-          <div class='grid justify-items-center my-5'>
-            <i class='ti ti-user-plus text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
-            <span class='text-slate-700 mt-2'><%= @profile.num_followers || 0%> Followers</span>
-          </div>
-          <div class='grid justify-items-center my-5'>
-            <i class='ti ti-bell-ringing text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
-            <span class='text-slate-700 mt-2'><%= @profile.num_following || 0 %> Following</span>
-          </div>
-          <div class='grid justify-items-center my-5'>
-            <i class='ti ti-star text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
-            <span class='text-slate-700 mt-2'><%= @profile.num_stars || 0 %></span>
-          </div>
-          <div class='grid justify-items-center my-5'>
-            <i class='ti ti-git-branch text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
-            <span class='text-slate-700 mt-2'><%= @profile.last_year_contrib || 0 %> Year Contributions</span>
-          </div>
-          <div class='grid justify-items-center my-5'>
-            <i class='ti ti-world text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
-            <span class='text-slate-700 mt-2'><%= @profile.location || 'N/A' %></span>
-          </div>
-          <div class='grid justify-items-center my-5'>
-            <% if @profile.in_progress? %>
-              <i class='ti ti-refresh text-2xl bg-yellow text-white p-3 rounded-full'></i>
-              <span class='text-slate-700 mt-2'><%= t('status.profile.indexing') %></span>
-            <% elsif @profile.completed? %>
-              <i class='ti ti-check text-2xl bg-green text-white p-3 rounded-full'></i>
-              <span class='text-slate-700 mt-2'><%= t('status.profile.indexed') %></span>
-            <% else @profile.error? %>
-              <i class='ti ti-x text-2xl bg-red text-white p-3 rounded-full'></i>
-              <span class='text-slate-700 mt-2'><%= t('status.profile.error') %></span>
+<%= turbo_frame_tag "#{dom_id @profile}-full" do %>
+  <div class='w-full'>
+    <%= render CardComponent.new(footer: link_to(t('actions.back'),  profiles_path, data: {turbo_frame: '_top'}, class: 'default-button')) do %>
+      <%= render Cards::SectionComponent.new do %>
+        <div class='grid justify-items-center'>
+          <%= image_tag @profile.profile_image_url, class: 'rounded-full w-60 mb-5' if @profile.profile_image_url %>
+          <div class='text-xl font-bold'><%= @profile.name %></div>
+          <div class='text-xl text-slate-600'><%= @profile.username %></div>
+          <div class='grid gap-3 lg:grid-cols-4 md:grid-cols-2 w-full my-5'>
+            <div class='grid justify-items-center my-5'>
+              <i class='ti ti-brand-github text-2xl p-4 rounded-full bg-black text-white'></i>
+              <span class='text-slate-700 mt-2 hover:text-blue-800'><%= link_to t('actions.access'), @profile.shortened_url %></span>
+            </div>
+            <div class='grid justify-items-center my-5'>
+              <i class='ti ti-user-plus text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
+              <span class='text-slate-700 mt-2'><%= @profile.num_followers || 0%> Followers</span>
+            </div>
+            <div class='grid justify-items-center my-5'>
+              <i class='ti ti-bell-ringing text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
+              <span class='text-slate-700 mt-2'><%= @profile.num_following || 0 %> Following</span>
+            </div>
+            <div class='grid justify-items-center my-5'>
+              <i class='ti ti-star text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
+              <span class='text-slate-700 mt-2'><%= @profile.num_stars || 0 %></span>
+            </div>
+            <div class='grid justify-items-center my-5'>
+              <i class='ti ti-git-branch text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
+              <span class='text-slate-700 mt-2'><%= @profile.last_year_contrib || 0 %> Year Contributions</span>
+            </div>
+            <div class='grid justify-items-center my-5'>
+              <i class='ti ti-world text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
+              <span class='text-slate-700 mt-2'><%= @profile.location || 'N/A' %></span>
+            </div>
+            <div class='grid justify-items-center my-5'>
+              <% if @profile.in_progress? %>
+                <i class='ti ti-refresh text-2xl bg-yellow text-white p-3 rounded-full'></i>
+                <span class='text-slate-700 mt-2'><%= t('status.profile.indexing') %></span>
+              <% elsif @profile.completed? %>
+                <i class='ti ti-check text-2xl bg-green text-white p-3 rounded-full'></i>
+                <span class='text-slate-700 mt-2'><%= t('status.profile.indexed') %></span>
+              <% else @profile.error? %>
+                <i class='ti ti-x text-2xl bg-red text-white p-3 rounded-full'></i>
+                <span class='text-slate-700 mt-2'><%= t('status.profile.error') %></span>
+              <% end %>
+            </div>
+            <% unless @profile.in_progress? %>
+              <div class='grid justify-items-center my-5'>
+                <%= render Dropdown::ItemComponent.new(icon: 'refresh', title: t('actions.reindex'), url: reindex_profile_path(@profile), put: true) %>
+              </div>
             <% end %>
           </div>
-          <% unless @profile.in_progress? %>
-            <div class='grid justify-items-center my-5'>
-              <%= render Dropdown::ItemComponent.new(icon: 'refresh', title: t('actions.reindex'), url: reindex_profile_path(@profile), put: true) %>
-            </div>
-          <% end %>
         </div>
-      </div>
-      <% if @profile.organizations.any? %>
-        <h3 class='mt-5 text-center font-bold text-lg'><%= t('models.organizations').capitalize %></h3>
-        <div class="overflow-x-scroll flex p-5 border rounded-md border-slate-100">
-          <% @profile.organizations.each do |org| %>
-            <div class="flex-none py-6 px-3 first:pl-6 last:pr-6">
-              <div class="flex flex-col items-center justify-center gap-3">
-                <%= link_to org, data: { turbo_frame: '_top' } do %>
-                  <%= image_tag org.image_url, class:"w-16 h-16 rounded-full" %>
-                <% end %>
-                <strong class="text-slate-900 text-xs font-medium"><%= org.name %></strong>
+        <% if @profile.organizations.any? %>
+          <h3 class='mt-5 text-center font-bold text-lg'><%= t('models.organizations').capitalize %></h3>
+          <div class="overflow-x-scroll flex p-5 border rounded-md border-slate-100">
+            <% @profile.organizations.each do |org| %>
+              <div class="flex-none py-6 px-3 first:pl-6 last:pr-6">
+                <div class="flex flex-col items-center justify-center gap-3">
+                  <%= link_to org, data: { turbo_frame: '_top' } do %>
+                    <%= image_tag org.image_url, class:"w-16 h-16 rounded-full" %>
+                  <% end %>
+                  <strong class="text-slate-900 text-xs font-medium"><%= org.name %></strong>
+                </div>
               </div>
-            </div>
-          <% end %>
-        </div>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>

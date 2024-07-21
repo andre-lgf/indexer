@@ -5,9 +5,11 @@ export default class extends Controller {
 
   connect() {
     this.formTarget.focus();
-    this.searchTarget.focus();
-    var length = this.searchTarget.value.length;
-    this.searchTarget.setSelectionRange(length, length);
+    if(this.hasSearchTarget){
+      this.searchTarget.focus();
+      var length = this.searchTarget.value.length;
+      this.searchTarget.setSelectionRange(length, length);
+    }
   }
 
   submit() {

@@ -24,6 +24,7 @@
   <%= render Cards::SectionComponent.new do %>
     <div class='min-w-full mb-8 -mt-3'>
       <%= render "#{@resource_model}s::ListHeaderComponent".constantize.new %>
+      <%= helpers.turbo_stream_from @list_resource_frame_tag %>
       <%= turbo_frame_tag @list_resource_frame_tag do %>
         <%= render "#{@resource_model}s::ListItemComponent".constantize.with_collection(@collection) %>
       <% end %>

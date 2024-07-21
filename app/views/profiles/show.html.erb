@@ -1,5 +1,4 @@
+<%= turbo_stream_from "profile_#{@profile.id}-full" %>
 <div class='w-full'>
-  <%= turbo_frame_tag "#{dom_id @profile}-full" do %>
-    <%= render ::Profiles::RecordComponent.new(profile: @profile) %>
-  <% end %>
+  <%= render "detailed_profile", profile: @profile %>
 </div>

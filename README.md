@@ -15,7 +15,7 @@ This app was built for scrapping github profiles using Nokogiri, storing the inf
 
 Since the objective was to retrieve only the profile using this method, the organization info is being fetched using GitHub's API via Octokit. A simple search solution using Elasticsearch was also implemented (can be opted in or out in the Profiles index page), and everytime a Profile gets saved, it will reindex the record, and will remove it when the Profile gets deleted, so make sure to have Elasticsearch running. It also makes use of Hotwire.
 
-It can be run locally starting the rails server (the dependencies can be installed locally too, or run by starting the desired containers), or by using docker-compose to run the entire stack (there's a nginx server configured for it, so the application can be accessed simply in `http://localhost`, without the need for the port. It will also run in production environment when using docker-compose).
+It can be run locally starting the rails server (the dependencies can be installed locally too, or run by starting the desired containers -- you may need to set `network_mode: "host"` for the containers you wish to use), or by using docker-compose to run the entire stack (there's a nginx server configured for it, so the application can be accessed simply in `http://localhost`, without the need for the port. It will also run in production environment when using docker-compose).
 
 ## Configuration
   - `.compose.env` file is used by `docker-compose`, e.g.:

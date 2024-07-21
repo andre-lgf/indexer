@@ -52,7 +52,7 @@ class ProfilesController < ApplicationController
             ])
           else
             render(turbo_stream: [
-              turbo_stream.append("profiles", html: render_to_string(::Profiles::ListItemComponent.new(
+              turbo_stream.append("profiles_list", html: render_to_string(::Profiles::ListItemComponent.new(
                 profile: @profile,
               ))),
               turbo_stream.prepend("flash", partial: "layouts/flash"),
@@ -83,7 +83,7 @@ class ProfilesController < ApplicationController
         format.turbo_stream do
           flash.now[:notice] = I18n.t("messages.profiles.updated")
           render(turbo_stream: [
-            turbo_stream.update("#{@profile}-full", html: render_to_string(::Profiles::RecordComponent.new(
+            turbo_stream.update("profile_#{@profile.id}-full", html: render_to_string(::Profiles::RecordComponent.new(
               profile: @profile,
             ))),
             turbo_stream.update(@profile, html: render_to_string(::Profiles::ListItemComponent.new(
@@ -141,7 +141,7 @@ class ProfilesController < ApplicationController
       format.turbo_stream do
         flash.now[:notice] = I18n.t("messages.profiles.reindexing")
         render(turbo_stream: [
-          turbo_stream.update("#{@profile}-full", html: render_to_string(::Profiles::RecordComponent.new(
+          turbo_stream.update("profile_#{@profile.id}-full", html: render_to_string(::Profiles::RecordComponent.new(
             profile: @profile,
           ))),
           turbo_stream.update(@profile, html: render_to_string(::Profiles::ListItemComponent.new(

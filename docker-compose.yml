@@ -74,7 +74,7 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
-    network_mode: "host"
+    # network_mode: "host"
     environment:
       discovery.type: "single-node"
       ES_JAVA_OPTS: "-Xms2g -Xmx2g"
