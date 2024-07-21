@@ -98,7 +98,6 @@ accessories:
         discovery.type: "single-node"
         ES_JAVA_OPTS: "-Xms2g -Xmx2g"
         xpack.security.enabled: false
-        network.host: 0.0.0.0
     volumes:
       - ./esdata:/usr/share/elasticsearch/data
 
