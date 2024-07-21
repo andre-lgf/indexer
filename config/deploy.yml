@@ -37,6 +37,7 @@ env:
   clear:
     DB_HOST: 159.203.129.114
     REDIS_URL: "redis://159.203.129.114:6379/0"
+    ELASTICSEARCH_URL: "http://159.203.171.222:9200"
   secret:
     - RAILS_MASTER_KEY
     - POSTGRES_PASSWORD
@@ -93,6 +94,7 @@ accessories:
         discovery.type: "single-node"
         ES_JAVA_OPTS: "-Xms2g -Xmx2g"
         xpack.security.enabled: false
+        network.host: 0.0.0.0
     volumes:
       - ./esdata:/usr/share/elasticsearch/data
 
