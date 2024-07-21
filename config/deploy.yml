@@ -85,21 +85,17 @@ accessories:
   elasticsearch:
     image: elasticsearch:8.14.3
     host: 159.203.171.222
-    port: 9200
     options:
       publish:
         - "9200:9200"
         - "9300:9300"
-    # ports:
-    #   - "9200:9200"
-    #   - "9300:9300"
     env:
       clear:
         discovery.type: "single-node"
         ES_JAVA_OPTS: "-Xms2g -Xmx2g"
-        xpack.security.enabled: false
+        xpack.security.enabled: "false"
     volumes:
-      - ./esdata:/usr/share/elasticsearch/data
+      - ./esdata:/usr/share/elasticsearch/esdata
 
 # Configure custom arguments for Traefik. Be sure to reboot traefik when you modify it.
 # traefik:
