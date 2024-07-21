@@ -4,7 +4,7 @@
       <div class='grid justify-items-center'>
         <%= image_tag @profile.profile_image_url, class: 'rounded-full w-60 mb-5' if @profile.profile_image_url %>
         <div class='text-xl font-bold'><%= @profile.name %></div>
-        <div class='text-xl text-slate-600'><%= @profile&.username %></div>
+        <div class='text-xl text-slate-600'><%= @profile.username %></div>
         <div class='grid gap-3 lg:grid-cols-4 md:grid-cols-2 w-full my-5'>
           <div class='grid justify-items-center my-5'>
             <i class='ti ti-brand-github text-2xl p-4 rounded-full bg-black text-white'></i>
@@ -12,23 +12,23 @@
           </div>
           <div class='grid justify-items-center my-5'>
             <i class='ti ti-user-plus text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
-            <span class='text-slate-700 mt-2'><%= @profile&.num_followers || 0%> Followers</span>
+            <span class='text-slate-700 mt-2'><%= @profile.num_followers || 0%> Followers</span>
           </div>
           <div class='grid justify-items-center my-5'>
             <i class='ti ti-bell-ringing text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
-            <span class='text-slate-700 mt-2'><%= @profile&.num_following || 0 %> Following</span>
+            <span class='text-slate-700 mt-2'><%= @profile.num_following || 0 %> Following</span>
           </div>
           <div class='grid justify-items-center my-5'>
             <i class='ti ti-star text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
-            <span class='text-slate-700 mt-2'><%= @profile&.num_stars || 0 %></span>
+            <span class='text-slate-700 mt-2'><%= @profile.num_stars || 0 %></span>
           </div>
           <div class='grid justify-items-center my-5'>
             <i class='ti ti-git-branch text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
-            <span class='text-slate-700 mt-2'><%= @profile&.last_year_contrib || 0 %> Year Contributions</span>
+            <span class='text-slate-700 mt-2'><%= @profile.last_year_contrib || 0 %> Year Contributions</span>
           </div>
           <div class='grid justify-items-center my-5'>
             <i class='ti ti-world text-2xl p-4 rounded-full bg-slate-500 text-white'></i>
-            <span class='text-slate-700 mt-2'><%= @profile&.location || 'N/A' %></span>
+            <span class='text-slate-700 mt-2'><%= @profile.location || 'N/A' %></span>
           </div>
           <div class='grid justify-items-center my-5'>
             <% if @profile.in_progress? %>

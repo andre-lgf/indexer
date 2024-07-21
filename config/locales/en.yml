@@ -36,6 +36,9 @@ en:
     profile:
       indexed: Indexed
       indexing: Indexing
+  attributes:
+    name: Name
+    members: Members
   models:
     profile: Profile
     profiles: Profiles
@@ -61,5 +64,7 @@ en:
     reindex: Reindex
     are_you_sure: "Are you sure?"
     add: 'Add %{obj}'
+    edit_record: 'Edit %{obj}'
+    access: Access
   errors:
     missing_obj: 'missing %{obj}'

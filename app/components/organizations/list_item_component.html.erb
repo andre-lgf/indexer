@@ -8,5 +8,9 @@
     <div class='col-span-5'>
       <div class='font-bold text-xl'><%= @organization.name %></div>
     </div>
+    <div class='grid justify-items-center'>
+      <i class='ti ti-users text-xl p-4 rounded-full bg-slate-500 text-white'></i>
+      <span class='text-slate-700 mt-2'><%= @organization.num_members || 0 %> Membros</span>
+    </div>
   </div>
 <% end %>

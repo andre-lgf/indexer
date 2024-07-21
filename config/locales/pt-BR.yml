@@ -31,11 +31,14 @@ pt-BR:
   activerecord:
     errors:
       messages:
-        host_not_allowed: "Tem host inválido"
+        host_not_allowed: "tem host inválido"
   status:
     profile:
       indexed: Indexado
       indexing: Indexando
+  attributes:
+    name: Nome
+    members: Membros
   models:
     profile: Usuário
     profiles: Usuários
