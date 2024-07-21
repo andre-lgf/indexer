@@ -10,6 +10,7 @@
     <div class='col-span-5'>
       <div class='font-bold text-xl'><%= @profile.name %></div>
       <div><%= @profile.username %></div>
+      <div class='mt-2 text-bold text-blue-800'><%= link_to @profile.shortened_url, @profile.shortened_url %></div>
     </div>
     <div class='<%= status_class %> text-center'><%= index_status %></div>
     <%= render Dropdown::ActionsComponent.new(resource: @profile) do %>

@@ -50,7 +50,7 @@ pt-BR:
       reindexing: "Reindexando Perfil."
       destroyed: "Perfil foi removido com sucesso."
       updated: "Perfil foi atualizado com sucesso."
-      create: "Perfil foi criado com sucesso."
+      created: "Perfil foi criado com sucesso."
   actions:
     search: Pesquisar
     use_elasticsearch: Usar Elasticsearch
