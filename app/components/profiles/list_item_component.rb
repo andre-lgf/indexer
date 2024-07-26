@@ -12,11 +12,21 @@ module Profiles
     private
 
     def status_class
-      classes = @profile.completed? ? "bg-green" : "bg-yellow"
+      classes = case @profile.indexing_status.to_sym
+      when :completed then "bg-green"
+      when :error then "bg-red"
+      else "bg-yellow"
+      end
 
       "text-white text-center text-sm rounded-full py-1 px-3 #{classes}"
     end
 
-    def index_status = @profile.completed? ? I18n.t("status.profile.indexed") : I18n.t("status.profile.indexing")
+    def index_status
+      case @profile.indexing_status.to_sym
+      when :completed then I18n.t("status.profile.indexed")
+      when :error then I18n.t("status.profile.error")
+      else I18n.t("status.profile.indexing")
+      end
+    end
   end
 end

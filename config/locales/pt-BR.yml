@@ -36,6 +36,7 @@ pt-BR:
     profile:
       indexed: Indexado
       indexing: Indexando
+      error: Erro
   attributes:
     name: Nome
     members: Membros

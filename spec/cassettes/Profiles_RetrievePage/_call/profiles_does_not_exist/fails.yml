@@ -1,0 +1,107 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://127.0.0.1:10002/session
+    body:
+      encoding: UTF-8
+      string: '{"capabilities":{"alwaysMatch":{"acceptInsecureCerts":true,"browserName":"firefox","unhandledPromptBehavior":"ignore","moz:firefoxOptions":{"binary":"/Users/galatti/.cache/selenium/firefox/mac-arm64/128.0.3/Firefox.app/Contents/MacOS/firefox","args":["-headless"],"prefs":{"remote.active-protocols":3}},"moz:debuggerAddress":true}}}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.22.0 (ruby macosx) watir/7.3.0
+      Content-Length:
+      - '332'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - '838'
+      Date:
+      - Fri, 26 Jul 2024 16:29:01 GMT
+    body:
+      encoding: UTF-8
+      string: '{"value":{"sessionId":"b7fcb2e7-6323-46e3-a44a-97415415f4d4","capabilities":{"acceptInsecureCerts":true,"browserName":"firefox","browserVersion":"128.0.3","moz:accessibilityChecks":false,"moz:buildID":"20240725162350","moz:debuggerAddress":"127.0.0.1:9222","moz:geckodriverVersion":"0.34.0","moz:headless":true,"moz:platformVersion":"23.5.0","moz:processID":20275,"moz:profile":"/var/folders/dj/srb__syn6855p37wjq5d2qyc0000gn/T/rust_mozprofilejjoF3A","moz:shutdownTimeout":60000,"moz:webdriverClick":true,"moz:windowless":false,"pageLoadStrategy":"normal","platformName":"mac","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"ignore","userAgent":"Mozilla/5.0
+        (Macintosh; Intel Mac OS X 10.15; rv:128.0) Gecko/20100101 Firefox/128.0"}}}'
+  recorded_at: Fri, 26 Jul 2024 16:29:02 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:10002/session/b7fcb2e7-6323-46e3-a44a-97415415f4d4/url
+    body:
+      encoding: UTF-8
+      string: '{"url":"https://github.com/nao_tem"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.22.0 (ruby macosx) watir/7.3.0
+      Content-Length:
+      - '36'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - '14'
+      Date:
+      - Fri, 26 Jul 2024 16:29:02 GMT
+    body:
+      encoding: UTF-8
+      string: '{"value":null}'
+  recorded_at: Fri, 26 Jul 2024 16:29:03 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:10002/session/b7fcb2e7-6323-46e3-a44a-97415415f4d4/title
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.22.0 (ruby macosx) watir/7.3.0
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - '46'
+      Date:
+      - Fri, 26 Jul 2024 16:29:03 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJ2YWx1ZSI6IlBhZ2Ugbm90IGZvdW5kIMK3IEdpdEh1YiDCtyBHaXRIdWIifQ==
+  recorded_at: Fri, 26 Jul 2024 16:29:03 GMT
+recorded_with: VCR 6.2.0

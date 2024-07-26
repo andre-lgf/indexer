@@ -36,6 +36,7 @@ en:
     profile:
       indexed: Indexed
       indexing: Indexing
+      error: Error
   attributes:
     name: Name
     members: Members

@@ -60,6 +60,15 @@ RSpec.describe(Profiles::Fetch, type: :interactor) do
       end
     end
 
+    context "profile does not exist" do
+      let(:profile) { create(:profile, github_url: "https://github.com/nao_tem", name: "Não tem") }
+
+      it "fails", vcr: true do
+        expect(context).to(be_a_failure)
+        expect(profile.reload.error?).to(be_truthy)
+      end
+    end
+
     context "missing profile" do
       let(:profile) { nil }
       it "fails" do

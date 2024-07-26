@@ -41,7 +41,7 @@ class ProfilesController < ApplicationController
         format.json { render(:show, status: :created, location: @profile) }
         format.turbo_stream do
           flash.now[:notice] = I18n.t("messages.profiles.created")
-          if profiles.size.eql?(1)
+          if Profile.count.eql?(1)
             render(turbo_stream: [
               turbo_stream.prepend("flash", partial: "layouts/flash"),
               turbo_stream.update("profiles-index", html: render_to_string(::Records::IndexComponent.new(
@@ -112,7 +112,7 @@ class ProfilesController < ApplicationController
       format.json { head(:no_content) }
       format.turbo_stream do
         flash.now[:notice] = I18n.t("messages.profiles.destroyed")
-        if profiles.empty?
+        if Profile.count.zero?
           render(turbo_stream: [
             turbo_stream.prepend("flash", partial: "layouts/flash"),
             turbo_stream.update("profiles-index", html: render_to_string(::Records::IndexComponent.new(
